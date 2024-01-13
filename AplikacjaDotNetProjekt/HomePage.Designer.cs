@@ -29,24 +29,37 @@
         private void InitializeComponent()
         {
             addProduct_button = new Button();
+            button1 = new Button();
             SuspendLayout();
             // 
             // addProduct_button
             // 
-            addProduct_button.Location = new Point(41, 70);
+            addProduct_button.Location = new Point(47, 93);
+            addProduct_button.Margin = new Padding(3, 4, 3, 4);
             addProduct_button.Name = "addProduct_button";
-            addProduct_button.Size = new Size(86, 45);
+            addProduct_button.Size = new Size(98, 60);
             addProduct_button.TabIndex = 0;
             addProduct_button.Text = "Add product";
             addProduct_button.UseVisualStyleBackColor = true;
             addProduct_button.Click += addProduct_button_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(570, 98);
+            button1.Name = "button1";
+            button1.Size = new Size(139, 55);
+            button1.TabIndex = 1;
+            button1.Text = "Add training";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // HomePage
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
+            Controls.Add(button1);
             Controls.Add(addProduct_button);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "HomePage";
             Text = "Form1";
             ResumeLayout(false);
@@ -55,5 +68,6 @@
         #endregion
 
         private Button addProduct_button;
+        private Button button1;
     }
 }
