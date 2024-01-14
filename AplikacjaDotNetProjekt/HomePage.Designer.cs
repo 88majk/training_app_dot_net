@@ -44,7 +44,6 @@
             // 
             // addTraining_button
             // 
-<<<<<<< HEAD
             addTraining_button.Location = new Point(570, 98);
             addTraining_button.Name = "addTraining_button";
             addTraining_button.Size = new Size(139, 55);
@@ -52,27 +51,13 @@
             addTraining_button.Text = "Add training";
             addTraining_button.UseVisualStyleBackColor = true;
             addTraining_button.Click += addTraining_button_Click;
-=======
-            button1.Location = new Point(499, 74);
-            button1.Margin = new Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(122, 41);
-            button1.TabIndex = 1;
-            button1.Text = "Add training";
-            button1.UseVisualStyleBackColor = true;
->>>>>>> b582faa50f203bcaf9fdc2ab6859c9c6ef581ecc
             // 
             // HomePage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-<<<<<<< HEAD
             ClientSize = new Size(914, 600);
             Controls.Add(addTraining_button);
-=======
-            ClientSize = new Size(800, 450);
-            Controls.Add(button1);
->>>>>>> b582faa50f203bcaf9fdc2ab6859c9c6ef581ecc
             Controls.Add(addProduct_button);
             Name = "HomePage";
             Text = "Home Page";
