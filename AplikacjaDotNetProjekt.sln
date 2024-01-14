@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AplikacjaDotNetProjekt", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddProductLibrary", "AddProductLibrary\AddProductLibrary.csproj", "{0D594D92-449C-4848-9AA0-DA82EFC5DD34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addTrainingLibrary", "addTrainingLibrary\addTrainingLibrary.csproj", "{5BE7C5BD-7941-4D50-94F9-7ECEEF190D81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0D594D92-449C-4848-9AA0-DA82EFC5DD34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D594D92-449C-4848-9AA0-DA82EFC5DD34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D594D92-449C-4848-9AA0-DA82EFC5DD34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE7C5BD-7941-4D50-94F9-7ECEEF190D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE7C5BD-7941-4D50-94F9-7ECEEF190D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE7C5BD-7941-4D50-94F9-7ECEEF190D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE7C5BD-7941-4D50-94F9-7ECEEF190D81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

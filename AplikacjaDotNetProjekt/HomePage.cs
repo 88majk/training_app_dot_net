@@ -3,6 +3,7 @@ namespace AplikacjaDotNetProjekt
     public partial class HomePage : Form
     {
         AddProduct addProduct;
+        AddTraining addTraining;
         public HomePage()
         {
             InitializeComponent();
@@ -24,6 +25,25 @@ namespace AplikacjaDotNetProjekt
 
                 addProduct.BringToFront();
                 addProduct.Focus();
+            }
+        }
+
+        private void addTraining_button_Click(object sender, EventArgs e)
+        {
+            if (addTraining == null || addTraining.IsDisposed)
+            {
+                addTraining = new AddTraining();
+                addTraining.Show();
+            }
+            else
+            {
+                if (addTraining.WindowState == FormWindowState.Minimized)
+                {
+                    addTraining.WindowState = FormWindowState.Normal;
+                }
+
+                addTraining.BringToFront();
+                addTraining.Focus();
             }
         }
     }
