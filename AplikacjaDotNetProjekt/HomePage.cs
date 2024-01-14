@@ -15,6 +15,7 @@ namespace AplikacjaDotNetProjekt
             {
                 addProduct = new AddProduct();
                 addProduct.Show();
+
             }
             else
             {
