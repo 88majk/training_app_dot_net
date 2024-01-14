@@ -11,6 +11,9 @@ namespace AplikacjaDotNetProjekt.Database
     public class DBContext : DbContext
     {
         public DbSet<Models.Product> Products { get; set; }
+        public DbSet<Models.CatalogExercise> CatalogExercises { get; set; }
+        public DbSet<Models.Training> Trainings { get; set; }
+        public DbSet<Models.ExercisesInTraining> Workouts { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
