@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace AplikacjaDotNetProjekt
 {
     internal static class Program
@@ -8,8 +10,11 @@ namespace AplikacjaDotNetProjekt
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            using (var context = new Database.DBContext())
+            {
+                context.Database.Migrate();
+
+            }
             ApplicationConfiguration.Initialize();
             Application.Run(new HomePage());
         }

@@ -40,11 +40,11 @@ namespace AddProductLibrary.API
             return new List<ProductModel>();
         }
 
-        private async Task<List<ProductModel>> SearchProducts(string query)
+        public async Task<List<ProductModel>> SearchProducts(string query)
         {
             using (HttpClient client = new HttpClient())
             {
-                string apiUrl = $"{ApiBaseUrl}/search?fields=product_name&categories_tags_en={query}&page_size=10";
+                string apiUrl = $"{ApiBaseUrl}/search?fields=product_name,nutriments&categories_tags={query}&page_size=1";
 
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
 
