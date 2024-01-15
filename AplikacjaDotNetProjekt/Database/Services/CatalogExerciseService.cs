@@ -25,17 +25,15 @@ namespace AplikacjaDotNetProjekt.Database.Services
                 _dbContext.CatalogExercises.Add(exercise);
                 _dbContext.SaveChanges();
 
-                // Zwróć ID nowo dodanego produktu
                 return exercise.Id;
             }
             catch (Exception ex)
             {
-                return -1; // Lub inna wartość oznaczająca błąd
+                return -1;
             }
         }
         public bool DoesExerciseExists(string exercisename)
         {
-            // Sprawdź, czy ćwiczenie o danej nazwie istnieje w bazie danych
             return _dbContext.CatalogExercises.Any(p => p.Name == exercisename);
         }
     }

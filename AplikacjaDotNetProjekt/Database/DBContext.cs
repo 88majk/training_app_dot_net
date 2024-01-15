@@ -23,5 +23,14 @@ namespace AplikacjaDotNetProjekt.Database
                 optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DieteticApp;Trusted_Connection=True;MultipleActiveResultSets=true;");
             }
         }
+
+        public List<CatalogExercise> GetExercisesFromDB()
+        {
+            using (var context = new DBContext())
+            {
+                List <CatalogExercise> records = context.CatalogExercises.ToList();
+                return records;
+            }
+        }
     }
 }

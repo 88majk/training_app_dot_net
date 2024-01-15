@@ -27,9 +27,16 @@ namespace AplikacjaDotNetProjekt.Database.Services
             }
             catch (Exception ex)
             {
-
                 return -1;
             }
+        }
+
+        public int GetExerciseIdByName(string exerciseName)
+        {
+            CatalogExercise exercise = _dbContext.CatalogExercises.FirstOrDefault(e => e.Name == exerciseName);
+
+   
+            return exercise != null ? exercise.Id : -1; 
         }
 
     }

@@ -32,6 +32,13 @@
             selectTraining_button = new Button();
             addNewTraining_button = new Button();
             addTraining_panel = new Panel();
+            titleTraininig_label = new Label();
+            error_label = new Label();
+            kgUnit_label = new Label();
+            trainingDetails_listBox = new ListBox();
+            weight_textBox = new TextBox();
+            reps_textBox = new TextBox();
+            sets_textBox = new TextBox();
             check_label = new Label();
             muscleParts_comboBox = new CheckedListBox();
             chooseExercise_label = new Label();
@@ -51,10 +58,7 @@
             trainingName_label = new Label();
             trainingName_textBox = new TextBox();
             addNewExercise_button = new Button();
-            sets_textBox = new TextBox();
-            textBox1 = new TextBox();
-            reps_textBox = new TextBox();
-            textBox2 = new TextBox();
+            saveWorkout_button = new Button();
             addTraining_panel.SuspendLayout();
             addNewExercise_panel.SuspendLayout();
             nameTraining_panel.SuspendLayout();
@@ -64,7 +68,7 @@
             // 
             title_label.AutoSize = true;
             title_label.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            title_label.Location = new Point(305, 21);
+            title_label.Location = new Point(343, 20);
             title_label.Name = "title_label";
             title_label.Size = new Size(99, 32);
             title_label.TabIndex = 0;
@@ -91,9 +95,13 @@
             // 
             // addTraining_panel
             // 
-            addTraining_panel.Controls.Add(textBox2);
+            addTraining_panel.Controls.Add(saveWorkout_button);
+            addTraining_panel.Controls.Add(titleTraininig_label);
+            addTraining_panel.Controls.Add(error_label);
+            addTraining_panel.Controls.Add(kgUnit_label);
+            addTraining_panel.Controls.Add(trainingDetails_listBox);
+            addTraining_panel.Controls.Add(weight_textBox);
             addTraining_panel.Controls.Add(reps_textBox);
-            addTraining_panel.Controls.Add(textBox1);
             addTraining_panel.Controls.Add(sets_textBox);
             addTraining_panel.Controls.Add(check_label);
             addTraining_panel.Controls.Add(muscleParts_comboBox);
@@ -102,16 +110,76 @@
             addTraining_panel.Controls.Add(searchExercise_textBox);
             addTraining_panel.Controls.Add(exercises_comboBox);
             addTraining_panel.Controls.Add(selectMuscleParts_label);
-            addTraining_panel.Location = new Point(29, 163);
+            addTraining_panel.Location = new Point(12, 74);
             addTraining_panel.Name = "addTraining_panel";
-            addTraining_panel.Size = new Size(645, 358);
+            addTraining_panel.Size = new Size(782, 447);
             addTraining_panel.TabIndex = 4;
             addTraining_panel.Visible = false;
+            // 
+            // titleTraininig_label
+            // 
+            titleTraininig_label.AutoSize = true;
+            titleTraininig_label.Location = new Point(496, 31);
+            titleTraininig_label.Name = "titleTraininig_label";
+            titleTraininig_label.Size = new Size(151, 20);
+            titleTraininig_label.TabIndex = 22;
+            titleTraininig_label.Text = "Your current exercises";
+            // 
+            // error_label
+            // 
+            error_label.AutoSize = true;
+            error_label.Location = new Point(62, 336);
+            error_label.Name = "error_label";
+            error_label.Size = new Size(22, 20);
+            error_label.TabIndex = 21;
+            error_label.Text = "id";
+            // 
+            // kgUnit_label
+            // 
+            kgUnit_label.AutoSize = true;
+            kgUnit_label.Location = new Point(260, 303);
+            kgUnit_label.Name = "kgUnit_label";
+            kgUnit_label.Size = new Size(25, 20);
+            kgUnit_label.TabIndex = 19;
+            kgUnit_label.Text = "kg";
+            // 
+            // trainingDetails_listBox
+            // 
+            trainingDetails_listBox.FormattingEnabled = true;
+            trainingDetails_listBox.ItemHeight = 20;
+            trainingDetails_listBox.Location = new Point(365, 60);
+            trainingDetails_listBox.Name = "trainingDetails_listBox";
+            trainingDetails_listBox.Size = new Size(401, 184);
+            trainingDetails_listBox.TabIndex = 18;
+            // 
+            // weight_textBox
+            // 
+            weight_textBox.Location = new Point(198, 300);
+            weight_textBox.Name = "weight_textBox";
+            weight_textBox.Size = new Size(62, 27);
+            weight_textBox.TabIndex = 17;
+            weight_textBox.Text = "Weight";
+            // 
+            // reps_textBox
+            // 
+            reps_textBox.Location = new Point(130, 300);
+            reps_textBox.Name = "reps_textBox";
+            reps_textBox.Size = new Size(62, 27);
+            reps_textBox.TabIndex = 16;
+            reps_textBox.Text = "Reps";
+            // 
+            // sets_textBox
+            // 
+            sets_textBox.Location = new Point(62, 300);
+            sets_textBox.Name = "sets_textBox";
+            sets_textBox.Size = new Size(62, 27);
+            sets_textBox.TabIndex = 14;
+            sets_textBox.Text = "Sets";
             // 
             // check_label
             // 
             check_label.AutoSize = true;
-            check_label.Location = new Point(304, 36);
+            check_label.Location = new Point(117, 10);
             check_label.Name = "check_label";
             check_label.Size = new Size(50, 20);
             check_label.TabIndex = 13;
@@ -119,17 +187,18 @@
             // 
             // muscleParts_comboBox
             // 
+            muscleParts_comboBox.BorderStyle = BorderStyle.FixedSingle;
             muscleParts_comboBox.FormattingEnabled = true;
-            muscleParts_comboBox.Location = new Point(228, 103);
+            muscleParts_comboBox.Location = new Point(31, 62);
             muscleParts_comboBox.Name = "muscleParts_comboBox";
-            muscleParts_comboBox.Size = new Size(182, 114);
+            muscleParts_comboBox.Size = new Size(274, 112);
             muscleParts_comboBox.TabIndex = 12;
             muscleParts_comboBox.SelectedIndexChanged += muscleParts_comboBox_SelectedIndexChanged;
             // 
             // chooseExercise_label
             // 
             chooseExercise_label.AutoSize = true;
-            chooseExercise_label.Location = new Point(246, 219);
+            chooseExercise_label.Location = new Point(98, 185);
             chooseExercise_label.Name = "chooseExercise_label";
             chooseExercise_label.Size = new Size(118, 20);
             chooseExercise_label.TabIndex = 10;
@@ -137,33 +206,34 @@
             // 
             // addExercise_button
             // 
-            addExercise_button.Location = new Point(256, 310);
+            addExercise_button.Location = new Point(99, 365);
             addExercise_button.Name = "addExercise_button";
             addExercise_button.Size = new Size(117, 29);
             addExercise_button.TabIndex = 7;
             addExercise_button.Text = "Add exercise";
             addExercise_button.UseVisualStyleBackColor = true;
+            addExercise_button.Click += addExercise_button_Click;
             // 
             // searchExercise_textBox
             // 
-            searchExercise_textBox.Location = new Point(27, 243);
+            searchExercise_textBox.Location = new Point(27, 245);
             searchExercise_textBox.Name = "searchExercise_textBox";
-            searchExercise_textBox.Size = new Size(182, 27);
+            searchExercise_textBox.Size = new Size(278, 27);
             searchExercise_textBox.TabIndex = 6;
             searchExercise_textBox.Text = "Search exercise...";
             // 
             // exercises_comboBox
             // 
             exercises_comboBox.FormattingEnabled = true;
-            exercises_comboBox.Location = new Point(226, 242);
+            exercises_comboBox.Location = new Point(29, 209);
             exercises_comboBox.Name = "exercises_comboBox";
-            exercises_comboBox.Size = new Size(184, 28);
+            exercises_comboBox.Size = new Size(276, 28);
             exercises_comboBox.TabIndex = 5;
             // 
             // selectMuscleParts_label
             // 
             selectMuscleParts_label.AutoSize = true;
-            selectMuscleParts_label.Location = new Point(241, 80);
+            selectMuscleParts_label.Location = new Point(98, 39);
             selectMuscleParts_label.Name = "selectMuscleParts_label";
             selectMuscleParts_label.Size = new Size(139, 20);
             selectMuscleParts_label.TabIndex = 4;
@@ -284,48 +354,26 @@
             addNewExercise_button.UseVisualStyleBackColor = true;
             addNewExercise_button.Click += addNewExercise_button_Click;
             // 
-            // sets_textBox
+            // saveWorkout_button
             // 
-            sets_textBox.Location = new Point(470, 185);
-            sets_textBox.Name = "sets_textBox";
-            sets_textBox.Size = new Size(125, 27);
-            sets_textBox.TabIndex = 14;
-            sets_textBox.Text = "Sets";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(260, 166);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
-            textBox1.TabIndex = 15;
-            textBox1.Text = "Sets";
-            // 
-            // reps_textBox
-            // 
-            reps_textBox.Location = new Point(470, 230);
-            reps_textBox.Name = "reps_textBox";
-            reps_textBox.Size = new Size(125, 27);
-            reps_textBox.TabIndex = 16;
-            reps_textBox.Text = "Reps";
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(470, 278);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(125, 27);
-            textBox2.TabIndex = 17;
-            textBox2.Text = "Weight";
+            saveWorkout_button.Location = new Point(508, 267);
+            saveWorkout_button.Name = "saveWorkout_button";
+            saveWorkout_button.Size = new Size(128, 29);
+            saveWorkout_button.TabIndex = 23;
+            saveWorkout_button.Text = "Save workout";
+            saveWorkout_button.UseVisualStyleBackColor = true;
+            saveWorkout_button.Click += saveWorkout_button_Click;
             // 
             // AddTraining
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(735, 548);
+            ClientSize = new Size(806, 548);
+            Controls.Add(addTraining_panel);
             Controls.Add(addNewExercise_button);
             Controls.Add(addNewTraining_button);
             Controls.Add(selectTraining_button);
             Controls.Add(title_label);
-            Controls.Add(addTraining_panel);
             Controls.Add(nameTraining_panel);
             Controls.Add(addNewExercise_panel);
             Name = "AddTraining";
@@ -366,8 +414,12 @@
         private Button nameTraining_button;
         private Label check_label;
         private TextBox sets_textBox;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox weight_textBox;
         private TextBox reps_textBox;
+        private ListBox trainingDetails_listBox;
+        private Label kgUnit_label;
+        private Label error_label;
+        private Label titleTraininig_label;
+        private Button saveWorkout_button;
     }
 }

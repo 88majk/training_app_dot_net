@@ -11,19 +11,19 @@ namespace AplikacjaDotNetProjekt.Database.Services
 {
     public class TrainingService
     {
-        private readonly DBContext _dBContext;
+        private readonly DBContext _dbContext;
 
         public TrainingService(DBContext dbContext)
         {
-            _dBContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public int AddTrainingToDatabase(Training training)
         {
             try
             {
-                _dBContext.Trainings.Add(training);
-                _dBContext.SaveChanges();
+                _dbContext.Trainings.Add(training);
+                _dbContext.SaveChanges();
 
                 return training.Id;
             }
@@ -35,7 +35,15 @@ namespace AplikacjaDotNetProjekt.Database.Services
 
         public bool DoesTrainingExists(string trainingName)
         {
-            return _dBContext.Trainings.Any(p => p.Name == trainingName);    
+            return _dbContext.Trainings.Any(p => p.Name == trainingName);    
+        }
+
+        public int GetTrainingIdByName(string trainingName)
+        {
+            Training training = _dbContext.Trainings.FirstOrDefault(e => e.Name == trainingName);
+
+
+            return training != null ? training.Id : -1;
         }
     }
 }

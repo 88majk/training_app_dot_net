@@ -12,8 +12,18 @@ namespace AplikacjaDotNetProjekt
         {
             using (var context = new Database.DBContext())
             {
-                context.Database.Migrate();
-
+                if (context.Database.CanConnect())
+                {
+                    // Baza danych istnieje, nie wykonuj tworzenia
+                    Console.WriteLine("Database already exists.");
+                }
+                else
+                {
+                    // Baza danych nie istnieje, wykonaj tworzenie
+                    Console.WriteLine("Creating database...");
+                    context.Database.EnsureCreated();
+                    Console.WriteLine("Database created.");
+                }
             }
             ApplicationConfiguration.Initialize();
             Application.Run(new HomePage());
