@@ -63,14 +63,7 @@ namespace AplikacjaDotNetProjekt
         // Wypełnienie ComboBoxa ćwiczeniami z bazy danych
         private void muscleParts_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<CatalogExercise> exercises = _dbContext.GetExercisesFromDB();
-
-            exercises_comboBox.Items.Clear();
-
-            foreach (var exercise in exercises)
-            {
-                exercises_comboBox.Items.Add(exercise.ToString());
-            }
+           
 
         }
 
@@ -139,6 +132,7 @@ namespace AplikacjaDotNetProjekt
             }
         }
 
+
         // Obsługa okienka - nazwanie treningu i wygenerowanie jego ID
         private void nameTraining_button_Click(object sender, EventArgs e)
         {
@@ -160,43 +154,6 @@ namespace AplikacjaDotNetProjekt
                 check_label.Text = trainingName_textBox.Text;
             }
         }
-
-
-        // Funkcja do zapisu całego treningu do bazy danych
-        public void AddExercisesToTraining(int trainingId, List<int> exerciseIds, List<int> sets, List<int> reps, List<float> weights)
-        {
-            if (exerciseIds.Count != sets.Count || sets.Count != reps.Count || reps.Count != weights.Count)
-            {
-                return;
-            }
-
-            
-                ExercisesInTraining exerciseInTraining = new ExercisesInTraining
-                {
-                    TrainingId = trainingId,
-                    ExerciseId = exerciseIds[0],
-                    Sets = sets[0],
-                    Reps = reps[0],
-                    Weight = weights[0]
-                };
-
-                int workoutId = _EITService.SaveWorkout(exerciseInTraining);
-                error_label.Text = $"Pomyslnie zapisano cwiczenie {workoutId} do bazy danych";
-            
-
-            try { 
-                _dbContext.SaveChanges();
-            }
-            catch (DbUpdateException ex)
-            {
-                var entry = ex.Entries.First(); // Pobierz pierwszy wpis, który spowodował problem
-                var entityType = entry.Entity.GetType().Name; // Pobierz nazwę typu encji
-                var errorMessage = ex.Message; // Pobierz komunikat o błędzie
-
-                // W tym miejscu możesz wykonać dodatkowe kroki w zależności od tego, co chcesz zrobić z informacjami o błędzie
-                check_label.Text = ($"Błąd aktualizacji dla encji {entityType}: {errorMessage}");
-            }
-}
 
 
         // Zapisywanie kolejnych ćwiczeń treningu
@@ -223,7 +180,7 @@ namespace AplikacjaDotNetProjekt
 
             for (int i = 0; i < sets.Count; i++)
             {
-                trainingDetails_listBox.Items.Add($"{exerciseId[i]}. {exerciseName[i]} - Sets: {sets[i]} - reps: {reps[i]} - weight: {weight[i]} kg");
+                trainingDetails_listBox.Items.Add($"{exerciseName[i]} - Sets: {sets[i]} - reps: {reps[i]} - weight: {weight[i]} kg");
             }
         }
 
@@ -248,6 +205,66 @@ namespace AplikacjaDotNetProjekt
         {
             int trainingId = _trainingService.GetTrainingIdByName(check_label.Text);
             AddExercisesToTraining(trainingId, exerciseId, sets, reps, weight);
+        }
+
+        // Funkcja do zapisu całego treningu do bazy danych
+        public void AddExercisesToTraining(int trainingId, List<int> exerciseIds, List<int> sets, List<int> reps, List<float> weights)
+        {
+            if (exerciseIds.Count != sets.Count || sets.Count != reps.Count || reps.Count != weights.Count)
+            {
+                return;
+            }
+
+            for (int i = 0; i < exerciseId.Count; i++)
+            {
+                ExercisesInTraining exerciseInTraining = new ExercisesInTraining
+                {
+                    TrainingId = trainingId,
+                    ExerciseId = exerciseIds[i],
+                    Sets = sets[i],
+                    Reps = reps[i],
+                    Weight = weights[i]
+                };
+
+                int workoutId = _EITService.SaveWorkout(exerciseInTraining);
+            }
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+
+            }
+        }
+
+        private void exercises_comboBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            List<string> selectedMuscleParts = new List<string>();
+            if (muscleParts_comboBox.CheckedItems.Count > 0)
+            {
+                foreach (object item in muscleParts_comboBox.CheckedItems)
+                {
+                    selectedMuscleParts.Add(item.ToString());
+                }
+                List<CatalogExercise> exercises = _catalogExerciseService.GetExercisesByMuscleParts(selectedMuscleParts);
+
+                exercises_comboBox.Items.Clear();
+
+                foreach (var exercise in exercises)
+                {
+                    exercises_comboBox.Items.Add(exercise.ToString());
+                }
+            }
+            else 
+            {
+                List<CatalogExercise> allExercises = _dbContext.GetExercisesFromDB();
+                foreach (var exercise in allExercises)
+                {
+                    exercises_comboBox.Items.Add(exercise.ToString());
+                }
+            }
+            
         }
     }
 }

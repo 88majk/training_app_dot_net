@@ -32,6 +32,7 @@
             selectTraining_button = new Button();
             addNewTraining_button = new Button();
             addTraining_panel = new Panel();
+            saveWorkout_button = new Button();
             titleTraininig_label = new Label();
             error_label = new Label();
             kgUnit_label = new Label();
@@ -58,7 +59,6 @@
             trainingName_label = new Label();
             trainingName_textBox = new TextBox();
             addNewExercise_button = new Button();
-            saveWorkout_button = new Button();
             addTraining_panel.SuspendLayout();
             addNewExercise_panel.SuspendLayout();
             nameTraining_panel.SuspendLayout();
@@ -115,6 +115,16 @@
             addTraining_panel.Size = new Size(782, 447);
             addTraining_panel.TabIndex = 4;
             addTraining_panel.Visible = false;
+            // 
+            // saveWorkout_button
+            // 
+            saveWorkout_button.Location = new Point(508, 267);
+            saveWorkout_button.Name = "saveWorkout_button";
+            saveWorkout_button.Size = new Size(128, 29);
+            saveWorkout_button.TabIndex = 23;
+            saveWorkout_button.Text = "Save workout";
+            saveWorkout_button.UseVisualStyleBackColor = true;
+            saveWorkout_button.Click += saveWorkout_button_Click;
             // 
             // titleTraininig_label
             // 
@@ -193,7 +203,6 @@
             muscleParts_comboBox.Name = "muscleParts_comboBox";
             muscleParts_comboBox.Size = new Size(274, 112);
             muscleParts_comboBox.TabIndex = 12;
-            muscleParts_comboBox.SelectedIndexChanged += muscleParts_comboBox_SelectedIndexChanged;
             // 
             // chooseExercise_label
             // 
@@ -229,6 +238,7 @@
             exercises_comboBox.Name = "exercises_comboBox";
             exercises_comboBox.Size = new Size(276, 28);
             exercises_comboBox.TabIndex = 5;
+            exercises_comboBox.MouseClick += exercises_comboBox_MouseClick;
             // 
             // selectMuscleParts_label
             // 
@@ -353,16 +363,6 @@
             addNewExercise_button.Text = "Add exercise";
             addNewExercise_button.UseVisualStyleBackColor = true;
             addNewExercise_button.Click += addNewExercise_button_Click;
-            // 
-            // saveWorkout_button
-            // 
-            saveWorkout_button.Location = new Point(508, 267);
-            saveWorkout_button.Name = "saveWorkout_button";
-            saveWorkout_button.Size = new Size(128, 29);
-            saveWorkout_button.TabIndex = 23;
-            saveWorkout_button.Text = "Save workout";
-            saveWorkout_button.UseVisualStyleBackColor = true;
-            saveWorkout_button.Click += saveWorkout_button_Click;
             // 
             // AddTraining
             // 

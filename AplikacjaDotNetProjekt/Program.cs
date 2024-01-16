@@ -1,4 +1,6 @@
+using AplikacjaDotNetProjekt.Database;
 using Microsoft.EntityFrameworkCore;
+using AplikacjaDotNetProjekt.Database.Services;
 
 namespace AplikacjaDotNetProjekt
 {
@@ -10,19 +12,25 @@ namespace AplikacjaDotNetProjekt
         [STAThread]
         static void Main()
         {
+            CatalogExerciseService service = new CatalogExerciseService(new DBContext());
             using (var context = new Database.DBContext())
             {
                 if (context.Database.CanConnect())
                 {
-                    // Baza danych istnieje, nie wykonuj tworzenia
                     Console.WriteLine("Database already exists.");
                 }
                 else
                 {
-                    // Baza danych nie istnieje, wykonaj tworzenie
                     Console.WriteLine("Creating database...");
                     context.Database.EnsureCreated();
                     Console.WriteLine("Database created.");
+
+                    string filePath = "C:\\Users\\mikol\\source\\repos\\AplikacjaDotNetProjekt\\addTrainingLibrary\\CatalogExercise.csv";
+
+                    var trainings = CatalogExerciseService.ReadCsv(filePath, ";");
+
+                    // Dodaj dane do bazy danych
+                    service.LoadExercisesFromDatabase(trainings);
                 }
             }
             ApplicationConfiguration.Initialize();
