@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
             addMeal_button = new Button();
+            addTraining_button = new Button();
             user_label = new Label();
             logOut_button = new Button();
             SuspendLayout();
             // 
-            // button1
+            // addTraining_button
             // 
-            button1.Location = new Point(499, 74);
-            button1.Margin = new Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(122, 41);
-            button1.TabIndex = 1;
-            button1.Text = "Add training";
-            button1.UseVisualStyleBackColor = true;
+            addTraining_button.Location = new Point(570, 98);
+            addTraining_button.Name = "addTraining_button";
+            addTraining_button.Size = new Size(139, 55);
+            addTraining_button.TabIndex = 1;
+            addTraining_button.Text = "Add training";
+            addTraining_button.UseVisualStyleBackColor = true;
+            addTraining_button.Click += addTraining_button_Click;
             // 
             // addMeal_button
             // 
@@ -81,7 +81,7 @@
             Controls.Add(logOut_button);
             Controls.Add(user_label);
             Controls.Add(addMeal_button);
-            Controls.Add(button1);
+            Controls.Add(addTraining_button);
             Name = "HomePage";
             Text = "Home Page";
             FormClosed += HomePage_FormClosed;
@@ -90,7 +90,7 @@
         }
 
         #endregion
-        private Button button1;
+        private Button addTraining_button;
         private Button addMeal_button;
         private Label user_label;
         private Button logOut_button;
