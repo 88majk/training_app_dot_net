@@ -25,18 +25,29 @@ namespace AplikacjaDotNetProjekt.Database.Services
                 _dbContext.Products.Add(product);
                 _dbContext.SaveChanges();
 
-                // Zwróć ID nowo dodanego produktu
+
                 return product.Id;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {         
-                return -1; // Lub inna wartość oznaczająca błąd
+                return -1;
             }
         }
         public bool DoesProductExist(string productName)
         {
-            // Sprawdź, czy produkt o danej nazwie istnieje w bazie danych
             return _dbContext.Products.Any(p => p.Nazwa == productName);
+        }
+        public async Task<List<Product>> GetAllProductsAsync()
+        {
+            using (var context = new DBContext())
+            {
+                return await context.Products.ToListAsync();
+            }
+        }
+        public Product GetProductByName(string productName)
+        {
+            // Pobierz produkt o danej nazwie z bazy danych
+            return _dbContext.Products.FirstOrDefault(p => p.Nazwa == productName);
         }
     }
 }

@@ -10,13 +10,33 @@ namespace AplikacjaDotNetProjekt
         [STAThread]
         static void Main()
         {
-            using (var context = new Database.DBContext())
+            try
             {
-                context.Database.Migrate();
+                using (var context = new Database.DBContext())
+                {
+                    if (context.Database.CanConnect())
+                    {
+                        // Baza danych istnieje, nie wykonuj tworzenia
+                        Console.WriteLine("Database already exists.");
+                    }
+                    else
+                    {
+                        // Baza danych nie istnieje, wykonaj tworzenie
+                        Console.WriteLine("Creating database...");
+                        context.Database.EnsureCreated();
+                        Console.WriteLine("Database created.");
+                    }
+                }
+
+                ApplicationConfiguration.Initialize();
+                Login login = new Login();
+                Application.Run(login);
 
             }
-            ApplicationConfiguration.Initialize();
-            Application.Run(new HomePage());
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Wyst¹pi³ b³¹d podczas migracji bazy danych: {ex.Message}");
+            }
         }
     }
 }

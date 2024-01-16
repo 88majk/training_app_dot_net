@@ -16,5 +16,7 @@ namespace AplikacjaDotNetProjekt.Database.Models
         public float Fiber { get; set; }
         public float Protein { get; set; }
         public float Salt { get; set; }
+
+        public virtual ICollection<Recipe> Meals { get; set; }
     }
 }
