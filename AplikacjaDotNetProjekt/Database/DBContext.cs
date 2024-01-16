@@ -10,7 +10,10 @@ namespace AplikacjaDotNetProjekt.Database
 {
     public class DBContext : DbContext
     {
-        public DbSet<Models.Product> Products { get; set; }
+        public DbSet<Product>? Products { get; set; }
+        public DbSet<Meal>? Meals { get; set; }
+        public DbSet<Recipe>? Recipes { get; set; }
+        public DbSet<User>? Users { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
