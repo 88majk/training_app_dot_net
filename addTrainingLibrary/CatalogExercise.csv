@@ -1,0 +1,36 @@
+Id;Name;MuscleParts
+1;Bench Press;Chest
+2;Deadlift;Back,Thighs and buttocks
+3;Squats;Thighs and buttocks,Calves
+4;Bicep Curls;Biceps,Forearms
+5;Shoulder Press;Shoulders
+6;Mid Row;Back,Biceps,Forearms
+7;Push-ups;Chest,Triceps,Shoulders
+8;Lat Pulldown;Back,Biceps
+9;Leg Press;Thighs and buttocks,Calves
+10;Tricep Dips;Triceps,Shoulders
+11;Plank;Abdomen
+12;Hammer Curls;Biceps,Forearms
+13;Lunges;Thighs and buttocks,Calves
+14;Arnold Press;Shoulders
+15;Chest Fly;Chest
+16;Barbell Row;Back,Biceps,Forearms
+17;Leg Curl;Thighs and buttocks,Calves
+18;Russian Twists;Abdomen
+19;Preacher Curl;Biceps,Forearms
+20;Calf Raises;Calves
+21;Dumbbell Pullover;Back,Chest
+22;Reverse Fly;Back,Shoulders
+23;Seated Leg Press;Thighs and buttocks,Calves
+24;Skull Crushers;Triceps
+25;Side Plank;Abdomen
+26;Reverse Curls;Forearms
+27;Box Jumps;Thighs and buttocks,Calves
+28;Dumbbell Lateral Raise;Shoulders
+29;Incline Bench Press;Chest
+30;Chin-ups;Back,Biceps
+31;Hack Squat;Thighs and buttocks,Calves
+32;Dumbbell Kickbacks;Triceps
+33;Hanging Leg Raise;Abdomen
+34;Wrist Curls;Forearms
+35;Step-ups;Thighs and buttocks,Calves
