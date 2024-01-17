@@ -1,5 +1,6 @@
 using AplikacjaDotNetProjekt.Database;
 using AplikacjaDotNetProjekt.Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AplikacjaDotNetProjekt
 {
@@ -13,6 +14,10 @@ namespace AplikacjaDotNetProjekt
         private bool isLogOut = false;
         private Database.Services.UserMealService _userMeal;
         private Database.Services.MealService _meal;
+        private Database.Services.TrainingService _trainingService;
+        private Database.Services.ExercisesInTrainingService _EITService;
+        private DBContext _dbContext;
+        
         List<string> typeMealList = new List<string>() { "Breakfast", "Brunch", "Dinner", "Dessert", "Lunch", "Supper", "Snack" };
 
         public HomePage(Login login)
@@ -23,8 +28,11 @@ namespace AplikacjaDotNetProjekt
             _login = login;
             _userMeal = new Database.Services.UserMealService(new DBContext());
             _meal = new Database.Services.MealService(new DBContext());
+            _trainingService = new Database.Services.TrainingService(new DBContext());
+            _EITService = new Database.Services.ExercisesInTrainingService(new DBContext());
+            _dbContext = new DBContext();
             InitializeTreeView();
-
+            InitializeTodaysExercises();
         }
 
         public bool getIsLogOut
@@ -70,6 +78,7 @@ namespace AplikacjaDotNetProjekt
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             InitializeTreeView();
+            InitializeTodaysExercises();
         }
 
         private void InitializeTreeView()
@@ -77,7 +86,6 @@ namespace AplikacjaDotNetProjekt
             if (addMeal != null)
             {
                 addMeal.Close();
-
             }
             DateTime currentDate = dateTimePicker1.Value.Date;
             List<UserMeal> allMealsToday = _userMeal.GetUserMealsForDate(currentDate, user.Id);
@@ -94,6 +102,36 @@ namespace AplikacjaDotNetProjekt
             foreach (UserMeal userMeal in allMealsToday)
             {
                 updateVievMealToday(currentDate, userMeal);
+            }
+        }
+
+        private void InitializeTodaysExercises()
+        {
+            DateTime currentDate = dateTimePicker1.Value.Date;
+            List<Training> todayTraining = _trainingService.GetTodaysTraining(user.Id, currentDate);
+            
+            todaysExercises_listBox.Items.Clear();
+            int i = 0;
+            foreach (Training training in todayTraining)
+            {
+                int todayTrainingId = _trainingService.GetTrainingIdByName(training.Name);
+                List<ExercisesInTraining> todayExercises = _EITService.GetAllExercisesInTraining(todayTrainingId);
+
+                List<ExercisesInTrainingDisplay> displayList =
+                    todayExercises.Select(exercise => new ExercisesInTrainingDisplay
+                    {
+                        ExerciseName = _dbContext.CatalogExercises.FirstOrDefault(c => c.Id == exercise.ExerciseId)?.Name,
+                        Sets = exercise.Sets,
+                        Reps = exercise.Reps,
+                        Weight = exercise.Weight
+                    })
+                .ToList();
+
+                foreach (var item in displayList)
+                {
+                    i++;
+                    todaysExercises_listBox.Items.Add(i + ". "+ item.ToString());
+                }
             }
         }
 
@@ -116,7 +154,8 @@ namespace AplikacjaDotNetProjekt
         {
             if (addTraining == null || addTraining.IsDisposed)
             {
-                addTraining = new AddTraining();
+                DateTime selectedDate = dateTimePicker1.Value;
+                addTraining = new AddTraining(selectedDate, user.Id);
                 addTraining.Show();
             }
             else
@@ -131,24 +170,7 @@ namespace AplikacjaDotNetProjekt
 
             }
         }
-        private void addTraining_button_Click(object sender, EventArgs e)
-        {
-            if (addTraining == null || addTraining.IsDisposed)
-            {
-                addTraining = new AddTraining(user.Id);
-                addTraining.Show();
-            }
-            else
-            {
-                if (addTraining.WindowState == FormWindowState.Minimized)
-                {
-                    addTraining.WindowState = FormWindowState.Normal;
-                }
 
-                addTraining.BringToFront();
-                addTraining.Focus();
-            }
-        }
         private void addMeasurement_button_Click(object sender, EventArgs e)
         {
             if (addMeasurement == null || addMeasurement.IsDisposed)

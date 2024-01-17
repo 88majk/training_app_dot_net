@@ -46,5 +46,21 @@ namespace AplikacjaDotNetProjekt.Database.Services
                   .ToList();
             
         }
+
+        public void DeleteExerciseFromTraining(int trainingId, int exerciseId)
+        {
+            var exerciseInTraining = _dbContext.Workouts
+                .FirstOrDefault(w => w.TrainingId == trainingId && w.ExerciseId == exerciseId);
+
+            if (exerciseInTraining != null)
+            {
+                _dbContext.Workouts.Remove(exerciseInTraining);
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("Nie znaleziono ćwiczenia w treningu.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

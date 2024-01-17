@@ -35,14 +35,25 @@
             addMeasurement_button = new Button();
             dateTimePicker1 = new DateTimePicker();
             tv = new TreeView();
+            todaysExercises_listBox = new ListBox();
             SuspendLayout();
+            // 
+            // addMeal_button
+            // 
+            addMeal_button.Location = new Point(53, 346);
+            addMeal_button.Name = "addMeal_button";
+            addMeal_button.Size = new Size(284, 32);
+            addMeal_button.TabIndex = 2;
+            addMeal_button.Text = "Add a meal";
+            addMeal_button.UseVisualStyleBackColor = true;
+            addMeal_button.Click += addMeal_button_Click;
             // 
             // addTraining_button
             // 
-            addTraining_button.Location = new Point(743, 119);
+            addTraining_button.Location = new Point(415, 347);
             addTraining_button.Margin = new Padding(3, 4, 3, 4);
             addTraining_button.Name = "addTraining_button";
-            addTraining_button.Size = new Size(159, 73);
+            addTraining_button.Size = new Size(322, 32);
             addTraining_button.TabIndex = 1;
             addTraining_button.Text = "Add training";
             addTraining_button.UseVisualStyleBackColor = true;
@@ -61,7 +72,7 @@
             // user_label
             // 
             user_label.AutoSize = true;
-            user_label.Location = new Point(41, 65);
+            user_label.Location = new Point(12, 9);
             user_label.Name = "user_label";
             user_label.Size = new Size(29, 15);
             user_label.TabIndex = 3;
@@ -69,10 +80,10 @@
             // 
             // logOut_button
             // 
-            logOut_button.Location = new Point(50, 319);
+            logOut_button.Location = new Point(12, 33);
             logOut_button.Margin = new Padding(3, 4, 3, 4);
             logOut_button.Name = "logOut_button";
-            logOut_button.Size = new Size(86, 31);
+            logOut_button.Size = new Size(73, 27);
             logOut_button.TabIndex = 4;
             logOut_button.Text = "Log Out";
             logOut_button.UseVisualStyleBackColor = true;
@@ -80,9 +91,9 @@
             // 
             // addMeasurement_button
             // 
-            addMeasurement_button.Location = new Point(758, 224);
+            addMeasurement_button.Location = new Point(91, 33);
             addMeasurement_button.Name = "addMeasurement_button";
-            addMeasurement_button.Size = new Size(144, 41);
+            addMeasurement_button.Size = new Size(140, 27);
             addMeasurement_button.TabIndex = 5;
             addMeasurement_button.Text = "Add measurement";
             addMeasurement_button.UseVisualStyleBackColor = true;
@@ -104,11 +115,37 @@
             tv.Size = new Size(284, 225);
             tv.TabIndex = 6;
             // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(240, 82);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(284, 27);
+            dateTimePicker1.TabIndex = 5;
+            dateTimePicker1.Value = new DateTime(2024, 1, 17, 13, 9, 49, 0);
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
+            // 
+            // tv
+            // 
+            tv.Location = new Point(53, 115);
+            tv.Name = "tv";
+            tv.Size = new Size(284, 225);
+            tv.TabIndex = 6;
+            // 
+            // todaysExercises_listBox
+            // 
+            todaysExercises_listBox.FormattingEnabled = true;
+            todaysExercises_listBox.ItemHeight = 20;
+            todaysExercises_listBox.Location = new Point(415, 116);
+            todaysExercises_listBox.Name = "todaysExercises_listBox";
+            todaysExercises_listBox.Size = new Size(322, 224);
+            todaysExercises_listBox.TabIndex = 7;
+            // 
             // HomePage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(todaysExercises_listBox);
             Controls.Add(tv);
             Controls.Add(dateTimePicker1);
             Controls.Add(addMeasurement_button);
@@ -133,6 +170,6 @@
         private Button addMeasurement_button;
         private DateTimePicker dateTimePicker1;
         private TreeView tv;
-
+        private ListBox todaysExercises_listBox;
     }
 }

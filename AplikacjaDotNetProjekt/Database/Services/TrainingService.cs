@@ -48,9 +48,22 @@ namespace AplikacjaDotNetProjekt.Database.Services
 
         public List<Training> GetTrainingsFromDatabase(int userId)
         {
-            return _dbContext.Trainings
+            var uniqueTrainings = _dbContext.Trainings
                 .Where(training => training.User_ID == userId)
+                .GroupBy(training => training.Name)
+                .Select(group => group.First())
+                .ToList();
+
+            return uniqueTrainings;
+        }
+
+        public List<Training> GetTodaysTraining(int userId, DateTime today)
+        {
+
+            return _dbContext.Trainings
+                .Where(training => training.Date.Date == today.Date && training.User_ID == userId)
                 .ToList();
         }
+
     }
 }
