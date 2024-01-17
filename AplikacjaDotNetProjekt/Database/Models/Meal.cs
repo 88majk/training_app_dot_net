@@ -13,6 +13,5 @@ namespace AplikacjaDotNetProjekt.Database.Models
 
         public virtual ICollection<Recipe> Products { get; set; }
         public virtual ICollection<UserMeal> UserMeals { get; set; }
-
     }
 }

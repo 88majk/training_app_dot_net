@@ -9,6 +9,7 @@ namespace AplikacjaDotNetProjekt
         User user;
         Login _login;
         AddTraining addTraining;
+        AddMeasurement addMeasurement;
         private bool isLogOut = false;
         private Database.Services.UserMealService _userMeal;
         private Database.Services.MealService _meal;
@@ -127,7 +128,43 @@ namespace AplikacjaDotNetProjekt
 
                 addTraining.BringToFront();
                 addTraining.Focus();
+
             }
+        }
+        private void addTraining_button_Click(object sender, EventArgs e)
+        {
+            if (addTraining == null || addTraining.IsDisposed)
+            {
+                addTraining = new AddTraining(user.Id);
+                addTraining.Show();
+            }
+            else
+            {
+                if (addTraining.WindowState == FormWindowState.Minimized)
+                {
+                    addTraining.WindowState = FormWindowState.Normal;
+                }
+
+                addTraining.BringToFront();
+                addTraining.Focus();
+            }
+        }
+        private void addMeasurement_button_Click(object sender, EventArgs e)
+        {
+            if (addMeasurement == null || addMeasurement.IsDisposed)
+            {
+                addMeasurement = new AddMeasurement(user.Id);
+                addMeasurement.Show();
+            }
+            else
+            {
+                if (addMeasurement.WindowState == FormWindowState.Minimized)
+                {
+                    addMeasurement.WindowState = FormWindowState.Normal;
+                }
+
+                addMeasurement.BringToFront();
+                addMeasurement.Focus();
         }
     }
 }

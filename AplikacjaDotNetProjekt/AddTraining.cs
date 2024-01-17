@@ -23,7 +23,7 @@ namespace AplikacjaDotNetProjekt
         List<string> muscleGroups = new List<string> { "Chest", "Back", "Shoulders",
             "Triceps", "Biceps", "Forearms", "Thighs and buttocks", "Abdomen", "Calves", "Cardio"};
         List<string> selectedValues = new List<string>();
-        List<string> selectedValues1 = new List<string>();
+        private string[] newColumnNames = { "Exercise", "Sets", "Reps", "Weight [kg]" };
 
         List<int> exerciseId = new List<int>();
         List<string> exerciseName = new List<string>();
@@ -37,9 +37,11 @@ namespace AplikacjaDotNetProjekt
         private DBContext _dbContext;
 
         string concatenatedValues;
+        private int userId;
 
-        public AddTraining()
+        public AddTraining(int id)
         {
+            userId = id;
             InitializeComponent();
             _dbContext = new DBContext();
             _catalogExerciseService = new Database.Services.CatalogExerciseService(new DBContext());
@@ -59,14 +61,6 @@ namespace AplikacjaDotNetProjekt
             nameTraining_panel.Visible = true;
 
         }
-
-        // Wypełnienie ComboBoxa ćwiczeniami z bazy danych
-        private void muscleParts_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           
-
-        }
-
         private void hideActionTypeButtons()
         {
             addNewTraining_button.Visible = false;
@@ -145,6 +139,7 @@ namespace AplikacjaDotNetProjekt
             {
                 Training trainingToAdd = new Training
                 {
+                    User_ID = userId,
                     Name = trainingName_textBox.Text,
                     Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                 };
@@ -241,8 +236,9 @@ namespace AplikacjaDotNetProjekt
         private void exercises_comboBox_MouseClick(object sender, MouseEventArgs e)
         {
             List<string> selectedMuscleParts = new List<string>();
-            if (muscleParts_comboBox.CheckedItems.Count > 0)
+            if (muscleParts_comboBox.CheckedItems.Count > 0 && (searchExercise_textBox.Text == "Search exercise..." || searchExercise_textBox.Text == ""))
             {
+                error_label.Text = "if";
                 foreach (object item in muscleParts_comboBox.CheckedItems)
                 {
                     selectedMuscleParts.Add(item.ToString());
@@ -256,15 +252,70 @@ namespace AplikacjaDotNetProjekt
                     exercises_comboBox.Items.Add(exercise.ToString());
                 }
             }
-            else 
+            else if (searchExercise_textBox.Text != "Search exercise...")
             {
+                error_label.Text = "else if";
+                List<CatalogExercise> exercises = _catalogExerciseService.GetExercisesBySearch(searchExercise_textBox.Text);
+
+                exercises_comboBox.Items.Clear();
+
+                foreach (var exercise in exercises)
+                {
+                    exercises_comboBox.Items.Add(exercise.ToString());
+                }
+            }
+
+            else
+            {
+                error_label.Text = "else";
                 List<CatalogExercise> allExercises = _dbContext.GetExercisesFromDB();
                 foreach (var exercise in allExercises)
                 {
                     exercises_comboBox.Items.Add(exercise.ToString());
                 }
             }
-            
+
+        }
+
+        ///// OBLUSGA PRZYCISKU SELECT TRAINING
+
+        private void selectTraining_button_Click(object sender, EventArgs e)
+        {
+            hideActionTypeButtons();
+            selectTraining_panel.Visible = true;
+
+            List<Training> trainings = _trainingService.GetTrainingsFromDatabase(userId);
+
+            foreach (var item in trainings)
+            {
+                savedTrainings_comboBox.Items.Add(item.ToString());
+            }
+
+        }
+
+        private void loadWorkout_button_Click(object sender, EventArgs e)
+        {
+            if (savedTrainings_comboBox.SelectedItem != null)
+            {
+                int trainingID = _trainingService.GetTrainingIdByName(savedTrainings_comboBox.SelectedItem.ToString());
+                List<ExercisesInTraining> workout = _EITService.GetAllExercisesInTraining(trainingID);
+
+                List<ExercisesInTrainingDisplay> displayList = 
+                    workout.Select(exercise => new ExercisesInTrainingDisplay
+                {
+                    ExerciseName = _dbContext.CatalogExercises.FirstOrDefault(c => c.Id == exercise.ExerciseId)?.Name,
+                    Sets = exercise.Sets,
+                    Reps = exercise.Reps,
+                    Weight = exercise.Weight
+                })
+                .ToList();
+
+                workout_dataGridView.DataSource = displayList;
+                for (int i = 0; i < workout_dataGridView.Columns.Count && i < newColumnNames.Length; i++)
+                {
+                    workout_dataGridView.Columns[i].HeaderText = newColumnNames[i];
+                }
+            }
         }
     }
 }

@@ -38,6 +38,13 @@ namespace AplikacjaDotNetProjekt.Database.Services
    
             return exercise != null ? exercise.Id : -1; 
         }
-
+        public List<ExercisesInTraining> GetAllExercisesInTraining(int trainingId)
+        {
+            
+            return _dbContext.Workouts
+                  .Where(workout => workout.TrainingId == trainingId)
+                  .ToList();
+            
+        }
     }
 }

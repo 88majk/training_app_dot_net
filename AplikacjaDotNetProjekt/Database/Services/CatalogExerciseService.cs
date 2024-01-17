@@ -84,7 +84,6 @@ namespace AplikacjaDotNetProjekt.Database.Services
 
         public List<CatalogExercise> GetExercisesByMuscleParts(List<string> selectedMuscleParts)
         {
-            // Przygotuj zapytanie SQL z dynamiczną ilością warunków
             string sqlQuery = "SELECT * FROM CatalogExercises WHERE ";
             for (int i = 0; i < selectedMuscleParts.Count; i++)
             {
@@ -92,11 +91,15 @@ namespace AplikacjaDotNetProjekt.Database.Services
                     sqlQuery += " AND ";
                 sqlQuery += $"MuscleParts LIKE '%{selectedMuscleParts[i]}%'";
             }
-
-            // Wykonaj zapytanie SQL
             return _dbContext.CatalogExercises
                 .FromSqlRaw(sqlQuery)
                 .ToList();
+        }
+
+        public List<CatalogExercise> GetExercisesBySearch(string search)
+        {
+            string sqlQuery = $"SELECT * FROM CatalogExercises WHERE Name LIKE '%{search}%'";
+            return _dbContext.CatalogExercises.FromSqlRaw(sqlQuery).ToList();
         }
     }
 }

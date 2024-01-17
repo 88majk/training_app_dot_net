@@ -13,6 +13,7 @@ namespace AplikacjaDotNetProjekt
     {
         AddProduct addProduct;
         User user;
+        
         List<Product> productList;
         List<float> weightList;
         private Database.Services.MealService _mealService;
@@ -54,6 +55,7 @@ namespace AplikacjaDotNetProjekt
             myMealChoose_button.Visible = true;
             allMealChoose_button.Visible = true;
             this.homePage = homePage;
+
         }
 
         private void addProduct_button_Click(object sender, EventArgs e)
@@ -222,8 +224,6 @@ namespace AplikacjaDotNetProjekt
                     homePage.updateVievMealToday(date.Date, usermeal);
                     return;
                 }
-
-
             }
             else
             {
@@ -372,6 +372,7 @@ namespace AplikacjaDotNetProjekt
                 // 2. Usuń wiersz z product_table
                 product_table.Rows.RemoveAt(index);
 
+
                 // 3. Usuń produkt i wagę z list
                 var productToRemove = productList.FirstOrDefault(p => p.Nazwa == productName);
                 if (productToRemove != null)
@@ -518,8 +519,6 @@ namespace AplikacjaDotNetProjekt
                 addProduct_button.Visible = true;
                 return_button.Visible = true;
             }
-
-
         }
     }
 }

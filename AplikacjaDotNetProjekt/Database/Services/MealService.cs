@@ -21,7 +21,6 @@ namespace AplikacjaDotNetProjekt.Database.Services
             {
                 try
                 {
-
                     // Dodaj posiłek do bazy danych
                     _dbContext.Meals.Add(meal);
                     _dbContext.SaveChanges();

@@ -15,4 +15,12 @@ namespace AplikacjaDotNetProjekt.Database.Models
         public int Reps { get; set; }
         public float Weight { get; set; }
     }
+
+    public class ExercisesInTrainingDisplay
+    {
+        public string ExerciseName { get; set; }
+        public int Sets { get; set; }
+        public int Reps { get; set; }
+        public float Weight { get; set; }
+    }
 }

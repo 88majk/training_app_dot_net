@@ -45,5 +45,12 @@ namespace AplikacjaDotNetProjekt.Database.Services
 
             return training != null ? training.Id : -1;
         }
+
+        public List<Training> GetTrainingsFromDatabase(int userId)
+        {
+            return _dbContext.Trainings
+                .Where(training => training.User_ID == userId)
+                .ToList();
+        }
     }
 }

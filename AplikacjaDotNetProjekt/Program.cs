@@ -12,6 +12,7 @@ namespace AplikacjaDotNetProjekt
         [STAThread]
         static void Main()
         {
+            CatalogExerciseService service = new CatalogExerciseService(new DBContext());
             try
             {
                 using (var context = new Database.DBContext())

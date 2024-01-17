@@ -48,12 +48,14 @@
             selectMeal_comboBox = new ComboBox();
             selectMeal_label = new Label();
             return_button_2 = new Button();
+
             ((System.ComponentModel.ISupportInitialize)product_table).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nutriments_table).BeginInit();
             SuspendLayout();
             // 
             // addProduct_button
             // 
+
             addProduct_button.Location = new Point(102, 340);
             addProduct_button.Name = "addProduct_button";
             addProduct_button.Size = new Size(95, 42);
