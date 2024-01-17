@@ -274,7 +274,7 @@ namespace AplikacjaDotNetProjekt
             if (allProducts != null && allProducts.Count > 0)
             {
                 List<string> productNames = allProducts.Select(product => product.Nazwa).Distinct().ToList();
-
+                selectProduct_combo.Items.Clear();
                 // Dodaj unikalne nazwy do rozwijanej listy
                 selectProduct_combo.Items.AddRange(productNames.ToArray());
 

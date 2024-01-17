@@ -21,14 +21,6 @@ namespace AplikacjaDotNetProjekt.Database.Services
             {
                 try
                 {
-                    // Sprawdź, czy posiłek o danej nazwie już istnieje w bazie
-                    bool mealExists = _dbContext.Meals.Any(m => m.Name == meal.Name);
-                    if (mealExists)
-                    {
-                        // Jeśli już istnieje, zwróć -1 jako kod błędu
-                        transaction.Rollback();
-                        return -2;
-                    }
 
                     // Dodaj posiłek do bazy danych
                     _dbContext.Meals.Add(meal);
@@ -59,6 +51,29 @@ namespace AplikacjaDotNetProjekt.Database.Services
                     return -1;
                 }
             }
+        }
+        public Meal GetMealById(int mealId)
+        {
+            return _dbContext.Meals.FirstOrDefault(m => m.Id == mealId && !m.Name.Contains("_"));
+        }
+        public Meal GetMealByIdWith(int mealId)
+        {
+            return _dbContext.Meals.FirstOrDefault(m => m.Id == mealId);
+        }
+        public Meal GetMealByName(string mealName)
+        {
+            return _dbContext.Meals.FirstOrDefault(m => m.Name == mealName);
+        }
+        public string GetLastMealNameFromDatabase(string prefix)
+        {
+            // Pobierz ostatnią nazwę posiłku, jeżeli istnieje
+            var lastMeal = _dbContext.Meals
+                .Where(m => m.Name.StartsWith(prefix))
+                .OrderByDescending(m => m.Id)
+                .FirstOrDefault();
+
+            return lastMeal?.Name;
+            
         }
     }
 }
