@@ -49,5 +49,10 @@ namespace AplikacjaDotNetProjekt.Database.Services
             // Pobierz produkt o danej nazwie z bazy danych
             return _dbContext.Products.FirstOrDefault(p => p.Nazwa == productName);
         }
+        public Product GetProductById(int productId)
+        {
+            // Pobierz produkt o danej nazwie z bazy danych
+            return _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+        }
     }
 }

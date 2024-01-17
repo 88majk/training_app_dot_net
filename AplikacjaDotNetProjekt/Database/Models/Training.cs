@@ -18,5 +18,4 @@ namespace AplikacjaDotNetProjekt.Database.Models
             return $"{Name}";
         }
     }
-
 }

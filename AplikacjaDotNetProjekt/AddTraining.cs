@@ -61,7 +61,6 @@ namespace AplikacjaDotNetProjekt
             nameTraining_panel.Visible = true;
 
         }
-
         private void hideActionTypeButtons()
         {
             addNewTraining_button.Visible = false;
@@ -318,6 +317,5 @@ namespace AplikacjaDotNetProjekt
                 }
             }
         }
-
     }
 }

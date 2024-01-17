@@ -445,6 +445,7 @@
             Controls.Add(nameTraining_panel);
             Controls.Add(addNewExercise_panel);
             Controls.Add(addTraining_panel);
+
             Name = "AddTraining";
             Text = "AddTraining";
             addTraining_panel.ResumeLayout(false);
@@ -499,5 +500,6 @@
         private ComboBox savedTrainings_comboBox;
         private Button loadWorkout_button;
         private Label label3;
+
     }
 }
