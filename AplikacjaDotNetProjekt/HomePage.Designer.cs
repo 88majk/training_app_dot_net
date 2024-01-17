@@ -32,6 +32,8 @@
             addMeal_button = new Button();
             user_label = new Label();
             logOut_button = new Button();
+            dateTimePicker1 = new DateTimePicker();
+            tv = new TreeView();
             SuspendLayout();
             // 
             // button1
@@ -73,11 +75,29 @@
             logOut_button.UseVisualStyleBackColor = true;
             logOut_button.Click += logOut_button_Click;
             // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(237, 41);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(238, 23);
+            dateTimePicker1.TabIndex = 5;
+            dateTimePicker1.Value = new DateTime(2024, 1, 17, 13, 9, 49, 0);
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
+            // 
+            // tv
+            // 
+            tv.Location = new Point(224, 189);
+            tv.Name = "tv";
+            tv.Size = new Size(284, 225);
+            tv.TabIndex = 6;
+            // 
             // HomePage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(tv);
+            Controls.Add(dateTimePicker1);
             Controls.Add(logOut_button);
             Controls.Add(user_label);
             Controls.Add(addMeal_button);
@@ -94,5 +114,7 @@
         private Button addMeal_button;
         private Label user_label;
         private Button logOut_button;
+        private DateTimePicker dateTimePicker1;
+        private TreeView tv;
     }
 }

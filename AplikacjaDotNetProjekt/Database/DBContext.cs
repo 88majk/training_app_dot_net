@@ -14,6 +14,7 @@ namespace AplikacjaDotNetProjekt.Database
         public DbSet<Meal>? Meals { get; set; }
         public DbSet<Recipe>? Recipes { get; set; }
         public DbSet<User>? Users { get; set; }
+        public DbSet<UserMeal>? UserMeals { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

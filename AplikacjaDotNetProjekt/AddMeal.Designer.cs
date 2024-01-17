@@ -41,13 +41,20 @@
             nutriments_table = new DataGridView();
             NutrimentsName = new DataGridViewTextBoxColumn();
             NutrimentsValue = new DataGridViewTextBoxColumn();
+            newMealChoose_button = new Button();
+            myMealChoose_button = new Button();
+            allMealChoose_button = new Button();
+            return_button = new Button();
+            selectMeal_comboBox = new ComboBox();
+            selectMeal_label = new Label();
+            return_button_2 = new Button();
             ((System.ComponentModel.ISupportInitialize)product_table).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nutriments_table).BeginInit();
             SuspendLayout();
             // 
             // addProduct_button
             // 
-            addProduct_button.Location = new Point(157, 340);
+            addProduct_button.Location = new Point(102, 340);
             addProduct_button.Name = "addProduct_button";
             addProduct_button.Size = new Size(95, 42);
             addProduct_button.TabIndex = 0;
@@ -57,7 +64,7 @@
             // 
             // addMeal_button
             // 
-            addMeal_button.Location = new Point(266, 340);
+            addMeal_button.Location = new Point(203, 340);
             addMeal_button.Name = "addMeal_button";
             addMeal_button.Size = new Size(95, 42);
             addMeal_button.TabIndex = 2;
@@ -87,8 +94,9 @@
             log_label.ForeColor = Color.Red;
             log_label.Location = new Point(234, 410);
             log_label.Name = "log_label";
-            log_label.Size = new Size(0, 15);
+            log_label.Size = new Size(18, 15);
             log_label.TabIndex = 6;
+            log_label.Text = "tu";
             log_label.Resize += log_label_resize;
             // 
             // mealType_combobox
@@ -118,6 +126,7 @@
             product_table.Size = new Size(240, 230);
             product_table.TabIndex = 9;
             product_table.CellDoubleClick += product_table_CellDoubleClick;
+            product_table.CellMouseUp += product_table_CellMouseUp;
             // 
             // ProductName
             // 
@@ -149,11 +158,87 @@
             NutrimentsValue.HeaderText = "Value";
             NutrimentsValue.Name = "NutrimentsValue";
             // 
+            // newMealChoose_button
+            // 
+            newMealChoose_button.Location = new Point(162, 31);
+            newMealChoose_button.Name = "newMealChoose_button";
+            newMealChoose_button.Size = new Size(157, 58);
+            newMealChoose_button.TabIndex = 11;
+            newMealChoose_button.Text = "New meal";
+            newMealChoose_button.UseVisualStyleBackColor = true;
+            newMealChoose_button.Click += newMealChoose_button_Click;
+            // 
+            // myMealChoose_button
+            // 
+            myMealChoose_button.Location = new Point(162, 121);
+            myMealChoose_button.Name = "myMealChoose_button";
+            myMealChoose_button.Size = new Size(157, 58);
+            myMealChoose_button.TabIndex = 12;
+            myMealChoose_button.Text = "My meal";
+            myMealChoose_button.UseVisualStyleBackColor = true;
+            myMealChoose_button.Click += myMealChoose_button_Click;
+            // 
+            // allMealChoose_button
+            // 
+            allMealChoose_button.Location = new Point(162, 215);
+            allMealChoose_button.Name = "allMealChoose_button";
+            allMealChoose_button.Size = new Size(157, 58);
+            allMealChoose_button.TabIndex = 13;
+            allMealChoose_button.Text = "All meal";
+            allMealChoose_button.UseVisualStyleBackColor = true;
+            allMealChoose_button.Click += allMealChoose_button_Click;
+            // 
+            // return_button
+            // 
+            return_button.Location = new Point(304, 340);
+            return_button.Name = "return_button";
+            return_button.Size = new Size(95, 42);
+            return_button.TabIndex = 14;
+            return_button.Text = "Return";
+            return_button.UseVisualStyleBackColor = true;
+            return_button.Click += return_button_Click;
+            // 
+            // selectMeal_comboBox
+            // 
+            selectMeal_comboBox.FormattingEnabled = true;
+            selectMeal_comboBox.Location = new Point(102, 66);
+            selectMeal_comboBox.Name = "selectMeal_comboBox";
+            selectMeal_comboBox.Size = new Size(297, 23);
+            selectMeal_comboBox.TabIndex = 15;
+            selectMeal_comboBox.SelectedIndexChanged += selectMeal_comboBox_SelectedIndexChanged;
+            // 
+            // selectMeal_label
+            // 
+            selectMeal_label.AutoSize = true;
+            selectMeal_label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            selectMeal_label.Location = new Point(203, 42);
+            selectMeal_label.Name = "selectMeal_label";
+            selectMeal_label.Size = new Size(89, 21);
+            selectMeal_label.TabIndex = 16;
+            selectMeal_label.Text = "Select meal";
+            // 
+            // return_button_2
+            // 
+            return_button_2.Location = new Point(203, 112);
+            return_button_2.Name = "return_button_2";
+            return_button_2.Size = new Size(95, 42);
+            return_button_2.TabIndex = 17;
+            return_button_2.Text = "Return";
+            return_button_2.UseVisualStyleBackColor = true;
+            return_button_2.Click += return_button_Click;
+            // 
             // AddMeal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(522, 463);
+            ClientSize = new Size(519, 463);
+            Controls.Add(return_button_2);
+            Controls.Add(selectMeal_label);
+            Controls.Add(selectMeal_comboBox);
+            Controls.Add(return_button);
+            Controls.Add(allMealChoose_button);
+            Controls.Add(myMealChoose_button);
+            Controls.Add(newMealChoose_button);
             Controls.Add(nutriments_table);
             Controls.Add(product_table);
             Controls.Add(mealType_label);
@@ -186,5 +271,12 @@
         private DataGridView nutriments_table;
         private DataGridViewTextBoxColumn NutrimentsName;
         private DataGridViewTextBoxColumn NutrimentsValue;
+        private Button newMealChoose_button;
+        private Button myMealChoose_button;
+        private Button allMealChoose_button;
+        private Button return_button;
+        private ComboBox selectMeal_comboBox;
+        private Label selectMeal_label;
+        private Button return_button_2;
     }
 }
