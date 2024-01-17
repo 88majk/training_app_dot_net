@@ -10,10 +10,14 @@ namespace AplikacjaDotNetProjekt.Database
 {
     public class DBContext : DbContext
     {
+
         public DbSet<Product>? Products { get; set; }
         public DbSet<Meal>? Meals { get; set; }
         public DbSet<Recipe>? Recipes { get; set; }
         public DbSet<User>? Users { get; set; }
+        public DbSet<Models.CatalogExercise>? CatalogExercises { get; set; }
+        public DbSet<Models.Training>? Trainings { get; set; }
+        public DbSet<Models.ExercisesInTraining>? Workouts { get; set; }
         public DbSet<UserMeal>? UserMeals { get; set; }
 
 
@@ -22,6 +26,15 @@ namespace AplikacjaDotNetProjekt.Database
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DieteticApp;Trusted_Connection=True;MultipleActiveResultSets=true;");
+            }
+        }
+
+        public List<CatalogExercise> GetExercisesFromDB()
+        {
+            using (var context = new DBContext())
+            {
+                List <CatalogExercise> records = context.CatalogExercises.ToList();
+                return records;
             }
         }
     }

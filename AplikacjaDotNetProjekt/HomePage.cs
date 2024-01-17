@@ -8,6 +8,7 @@ namespace AplikacjaDotNetProjekt
         AddMeal addMeal;
         User user;
         Login _login;
+        AddTraining addTraining;
         private bool isLogOut = false;
         private Database.Services.UserMealService _userMeal;
         private Database.Services.MealService _meal;
@@ -65,7 +66,6 @@ namespace AplikacjaDotNetProjekt
                 _login.CloseIfNotLoggedOut();
             }
         }
-
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             InitializeTreeView();
@@ -109,6 +109,24 @@ namespace AplikacjaDotNetProjekt
                         node.Nodes.Add(mealNode);
                     }
                 }
+            }
+        }
+        private void addTraining_button_Click(object sender, EventArgs e)
+        {
+            if (addTraining == null || addTraining.IsDisposed)
+            {
+                addTraining = new AddTraining();
+                addTraining.Show();
+            }
+            else
+            {
+                if (addTraining.WindowState == FormWindowState.Minimized)
+                {
+                    addTraining.WindowState = FormWindowState.Normal;
+                }
+
+                addTraining.BringToFront();
+                addTraining.Focus();
             }
         }
     }

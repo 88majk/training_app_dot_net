@@ -1,4 +1,6 @@
+using AplikacjaDotNetProjekt.Database;
 using Microsoft.EntityFrameworkCore;
+using AplikacjaDotNetProjekt.Database.Services;
 
 namespace AplikacjaDotNetProjekt
 {
@@ -25,6 +27,13 @@ namespace AplikacjaDotNetProjekt
                         Console.WriteLine("Creating database...");
                         context.Database.EnsureCreated();
                         Console.WriteLine("Database created.");
+                      
+                        string filePath = "C:\\Users\\mikol\\source\\repos\\AplikacjaDotNetProjekt\\addTrainingLibrary\\CatalogExercise.csv";
+
+                        var trainings = CatalogExerciseService.ReadCsv(filePath, ";");
+
+                        // Dodaj dane do bazy danych
+                        service.LoadExercisesFromDatabase(trainings);
                     }
                 }
 
@@ -35,7 +44,7 @@ namespace AplikacjaDotNetProjekt
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Wyst¹pi³ b³¹d podczas migracji bazy danych: {ex.Message}");
+                Console.WriteLine($"WystÂ¹piÂ³ bÂ³Â¹d podczas migracji bazy danych: {ex.Message}");
             }
         }
     }
