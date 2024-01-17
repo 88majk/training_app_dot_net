@@ -91,7 +91,6 @@ namespace AplikacjaDotNetProjekt.Database.Services
                     sqlQuery += " AND ";
                 sqlQuery += $"MuscleParts LIKE '%{selectedMuscleParts[i]}%'";
             }
-
             return _dbContext.CatalogExercises
                 .FromSqlRaw(sqlQuery)
                 .ToList();

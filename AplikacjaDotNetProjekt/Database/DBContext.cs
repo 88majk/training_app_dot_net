@@ -18,6 +18,7 @@ namespace AplikacjaDotNetProjekt.Database
         public DbSet<Models.CatalogExercise>? CatalogExercises { get; set; }
         public DbSet<Models.Training>? Trainings { get; set; }
         public DbSet<Models.ExercisesInTraining>? Workouts { get; set; }
+        public DbSet<UserMeal>? UserMeals { get; set; }
         public DbSet<Models.MeasurementHistory>? measurementHistories { get; set; }
 
 

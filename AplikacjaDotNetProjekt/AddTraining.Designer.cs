@@ -32,11 +32,11 @@
             selectTraining_button = new Button();
             addNewTraining_button = new Button();
             addTraining_panel = new Panel();
+            currExercises_dataGridView = new DataGridView();
             saveWorkout_button = new Button();
             titleTraininig_label = new Label();
             error_label = new Label();
             kgUnit_label = new Label();
-            trainingDetails_listBox = new ListBox();
             weight_textBox = new TextBox();
             reps_textBox = new TextBox();
             sets_textBox = new TextBox();
@@ -48,6 +48,8 @@
             exercises_comboBox = new ComboBox();
             selectMuscleParts_label = new Label();
             selectTraining_panel = new Panel();
+            inform_label = new Label();
+            saveAsDone_button = new Button();
             label3 = new Label();
             loadWorkout_button = new Button();
             label1 = new Label();
@@ -66,6 +68,7 @@
             trainingName_textBox = new TextBox();
             addNewExercise_button = new Button();
             addTraining_panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)currExercises_dataGridView).BeginInit();
             selectTraining_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)workout_dataGridView).BeginInit();
             addNewExercise_panel.SuspendLayout();
@@ -104,11 +107,11 @@
             // 
             // addTraining_panel
             // 
+            addTraining_panel.Controls.Add(currExercises_dataGridView);
             addTraining_panel.Controls.Add(saveWorkout_button);
             addTraining_panel.Controls.Add(titleTraininig_label);
             addTraining_panel.Controls.Add(error_label);
             addTraining_panel.Controls.Add(kgUnit_label);
-            addTraining_panel.Controls.Add(trainingDetails_listBox);
             addTraining_panel.Controls.Add(weight_textBox);
             addTraining_panel.Controls.Add(reps_textBox);
             addTraining_panel.Controls.Add(sets_textBox);
@@ -125,6 +128,19 @@
             addTraining_panel.TabIndex = 4;
             addTraining_panel.Visible = false;
             // 
+            // currExercises_dataGridView
+            // 
+            currExercises_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            currExercises_dataGridView.Location = new Point(376, 63);
+            currExercises_dataGridView.Name = "currExercises_dataGridView";
+            currExercises_dataGridView.RowHeadersWidth = 51;
+            currExercises_dataGridView.RowTemplate.Height = 29;
+            currExercises_dataGridView.Size = new Size(455, 188);
+            currExercises_dataGridView.TabIndex = 24;
+            currExercises_dataGridView.CellClick += currExercises_dataGridView_CellClick;
+            currExercises_dataGridView.CellDoubleClick += currExercises_dataGridView_CellDoubleClick;
+            currExercises_dataGridView.CellEndEdit += currExercises_dataGridView_CellEndEdit;
+            // 
             // saveWorkout_button
             // 
             saveWorkout_button.Location = new Point(549, 262);
@@ -133,12 +149,11 @@
             saveWorkout_button.TabIndex = 23;
             saveWorkout_button.Text = "Save workout";
             saveWorkout_button.UseVisualStyleBackColor = true;
-            saveWorkout_button.Click += saveWorkout_button_Click;
             // 
             // titleTraininig_label
             // 
             titleTraininig_label.AutoSize = true;
-            titleTraininig_label.Location = new Point(538, 31);
+            titleTraininig_label.Location = new Point(526, 31);
             titleTraininig_label.Name = "titleTraininig_label";
             titleTraininig_label.Size = new Size(151, 20);
             titleTraininig_label.TabIndex = 22;
@@ -161,15 +176,6 @@
             kgUnit_label.Size = new Size(25, 20);
             kgUnit_label.TabIndex = 19;
             kgUnit_label.Text = "kg";
-            // 
-            // trainingDetails_listBox
-            // 
-            trainingDetails_listBox.FormattingEnabled = true;
-            trainingDetails_listBox.ItemHeight = 20;
-            trainingDetails_listBox.Location = new Point(400, 60);
-            trainingDetails_listBox.Name = "trainingDetails_listBox";
-            trainingDetails_listBox.Size = new Size(423, 184);
-            trainingDetails_listBox.TabIndex = 18;
             // 
             // weight_textBox
             // 
@@ -260,6 +266,8 @@
             // 
             // selectTraining_panel
             // 
+            selectTraining_panel.Controls.Add(inform_label);
+            selectTraining_panel.Controls.Add(saveAsDone_button);
             selectTraining_panel.Controls.Add(label3);
             selectTraining_panel.Controls.Add(loadWorkout_button);
             selectTraining_panel.Controls.Add(label1);
@@ -267,14 +275,33 @@
             selectTraining_panel.Controls.Add(savedTrainings_comboBox);
             selectTraining_panel.Location = new Point(-2, 91);
             selectTraining_panel.Name = "selectTraining_panel";
-            selectTraining_panel.Size = new Size(865, 463);
+            selectTraining_panel.Size = new Size(865, 476);
             selectTraining_panel.TabIndex = 13;
             selectTraining_panel.Visible = false;
+            // 
+            // inform_label
+            // 
+            inform_label.AutoSize = true;
+            inform_label.Location = new Point(244, 374);
+            inform_label.Name = "inform_label";
+            inform_label.Size = new Size(50, 20);
+            inform_label.TabIndex = 6;
+            inform_label.Text = "label4";
+            // 
+            // saveAsDone_button
+            // 
+            saveAsDone_button.Location = new Point(41, 338);
+            saveAsDone_button.Name = "saveAsDone_button";
+            saveAsDone_button.Size = new Size(650, 33);
+            saveAsDone_button.TabIndex = 5;
+            saveAsDone_button.Text = "Save training as done";
+            saveAsDone_button.UseVisualStyleBackColor = true;
+            saveAsDone_button.Click += saveAsDone_button_Click;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(41, 101);
+            label3.Location = new Point(41, 121);
             label3.Name = "label3";
             label3.Size = new Size(110, 20);
             label3.TabIndex = 4;
@@ -302,11 +329,11 @@
             // workout_dataGridView
             // 
             workout_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            workout_dataGridView.Location = new Point(41, 124);
+            workout_dataGridView.Location = new Point(41, 144);
             workout_dataGridView.Name = "workout_dataGridView";
             workout_dataGridView.RowHeadersWidth = 51;
             workout_dataGridView.RowTemplate.Height = 29;
-            workout_dataGridView.Size = new Size(669, 300);
+            workout_dataGridView.Size = new Size(650, 188);
             workout_dataGridView.TabIndex = 1;
             // 
             // savedTrainings_comboBox
@@ -437,18 +464,19 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(875, 656);
-            Controls.Add(selectTraining_panel);
+            Controls.Add(addTraining_panel);
             Controls.Add(addNewExercise_button);
             Controls.Add(addNewTraining_button);
             Controls.Add(selectTraining_button);
             Controls.Add(title_label);
             Controls.Add(nameTraining_panel);
             Controls.Add(addNewExercise_panel);
-            Controls.Add(addTraining_panel);
+            Controls.Add(selectTraining_panel);
             Name = "AddTraining";
             Text = "AddTraining";
             addTraining_panel.ResumeLayout(false);
             addTraining_panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)currExercises_dataGridView).EndInit();
             selectTraining_panel.ResumeLayout(false);
             selectTraining_panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)workout_dataGridView).EndInit();
@@ -488,7 +516,6 @@
         private TextBox sets_textBox;
         private TextBox weight_textBox;
         private TextBox reps_textBox;
-        private ListBox trainingDetails_listBox;
         private Label kgUnit_label;
         private Label error_label;
         private Label titleTraininig_label;
@@ -499,5 +526,8 @@
         private ComboBox savedTrainings_comboBox;
         private Button loadWorkout_button;
         private Label label3;
+        private Button saveAsDone_button;
+        private Label inform_label;
+        private DataGridView currExercises_dataGridView;
     }
 }

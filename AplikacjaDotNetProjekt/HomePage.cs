@@ -1,4 +1,6 @@
+using AplikacjaDotNetProjekt.Database;
 using AplikacjaDotNetProjekt.Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AplikacjaDotNetProjekt
 {
@@ -10,6 +12,12 @@ namespace AplikacjaDotNetProjekt
         AddTraining addTraining;
         AddMeasurement addMeasurement;
         private bool isLogOut = false;
+        private Database.Services.UserMealService _userMeal;
+        private Database.Services.MealService _meal;
+        private Database.Services.TrainingService _trainingService;
+        private Database.Services.ExercisesInTrainingService _EITService;
+        private DBContext _dbContext;
+        List<string> typeMealList = new List<string>() { "Breakfast", "Brunch", "Dinner", "Dessert", "Lunch", "Supper", "Snack" };
 
         public HomePage(Login login)
         {
@@ -17,7 +25,13 @@ namespace AplikacjaDotNetProjekt
             InitializeComponent();
             user_label.Text = "Username: " + user.Name;
             _login = login;
-
+            _userMeal = new Database.Services.UserMealService(new DBContext());
+            _meal = new Database.Services.MealService(new DBContext());
+            _trainingService = new Database.Services.TrainingService(new DBContext());
+            _EITService = new Database.Services.ExercisesInTrainingService(new DBContext());
+            _dbContext = new DBContext();
+            InitializeTreeView();
+            InitializeTodaysExercises();
         }
 
         public bool getIsLogOut
@@ -29,7 +43,8 @@ namespace AplikacjaDotNetProjekt
         {
             if (addMeal == null || addMeal.IsDisposed)
             {
-                addMeal = new AddMeal();
+                DateTime selectedDate = dateTimePicker1.Value;
+                addMeal = new AddMeal(user, selectedDate, this);
                 addMeal.Show();
 
             }
@@ -59,12 +74,88 @@ namespace AplikacjaDotNetProjekt
                 _login.CloseIfNotLoggedOut();
             }
         }
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            InitializeTreeView();
+            InitializeTodaysExercises();
+        }
 
+        private void InitializeTreeView()
+        {
+            if (addMeal != null)
+            {
+                addMeal.Close();
+
+            }
+            DateTime currentDate = dateTimePicker1.Value.Date;
+            List<UserMeal> allMealsToday = _userMeal.GetUserMealsForDate(currentDate, user.Id);
+            if (tv.Nodes.Count > 0)
+            {
+                tv.Nodes.Clear();
+            }
+            foreach (string type in typeMealList)
+            {
+                TreeNode node = new TreeNode(type);
+                tv.Nodes.Add(node);
+
+            }
+            foreach (UserMeal userMeal in allMealsToday)
+            {
+                updateVievMealToday(currentDate, userMeal);
+            }
+        }
+
+        private void InitializeTodaysExercises()
+        {
+            DateTime currentDate = dateTimePicker1.Value.Date;
+            List<Training> todayTraining = _trainingService.GetTodaysTraining(user.Id, currentDate);
+            
+            todaysExercises_listBox.Items.Clear();
+            int i = 0;
+            foreach (Training training in todayTraining)
+            {
+                int todayTrainingId = _trainingService.GetTrainingIdByName(training.Name);
+                List<ExercisesInTraining> todayExercises = _EITService.GetAllExercisesInTraining(todayTrainingId);
+
+                List<ExercisesInTrainingDisplay> displayList =
+                    todayExercises.Select(exercise => new ExercisesInTrainingDisplay
+                    {
+                        ExerciseName = _dbContext.CatalogExercises.FirstOrDefault(c => c.Id == exercise.ExerciseId)?.Name,
+                        Sets = exercise.Sets,
+                        Reps = exercise.Reps,
+                        Weight = exercise.Weight
+                    })
+                .ToList();
+
+                foreach (var item in displayList)
+                {
+                    i++;
+                    todaysExercises_listBox.Items.Add(i + ". "+ item.ToString());
+                }
+            }
+        }
+
+        public void updateVievMealToday(DateTime date, UserMeal userMeal)
+        {
+            foreach (TreeNode node in tv.Nodes)
+            {
+                if (node.Text == userMeal.MealType)
+                {
+                    Meal meal = _meal.GetMealByIdWith(userMeal.MealId);
+                    if (meal != null)
+                    {
+                        TreeNode mealNode = new TreeNode(meal.Name);
+                        node.Nodes.Add(mealNode);
+                    }
+                }
+            }
+        }
         private void addTraining_button_Click(object sender, EventArgs e)
         {
             if (addTraining == null || addTraining.IsDisposed)
             {
-                addTraining = new AddTraining(user.Id);
+                DateTime selectedDate = dateTimePicker1.Value;
+                addTraining = new AddTraining(selectedDate, user.Id);
                 addTraining.Show();
             }
             else
@@ -76,9 +167,9 @@ namespace AplikacjaDotNetProjekt
 
                 addTraining.BringToFront();
                 addTraining.Focus();
+
             }
         }
-
         private void addMeasurement_button_Click(object sender, EventArgs e)
         {
             if (addMeasurement == null || addMeasurement.IsDisposed)

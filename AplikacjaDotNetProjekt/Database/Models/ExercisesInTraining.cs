@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AplikacjaDotNetProjekt.Database.Models
 {
@@ -22,5 +23,11 @@ namespace AplikacjaDotNetProjekt.Database.Models
         public int Sets { get; set; }
         public int Reps { get; set; }
         public float Weight { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ExerciseName} - Sets: {Sets} - Reps: {Reps} - Weight: {Weight}kg";
+        }
     }
+
 }

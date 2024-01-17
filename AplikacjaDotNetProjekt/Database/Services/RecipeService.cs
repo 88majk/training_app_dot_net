@@ -1,4 +1,5 @@
 ﻿using AplikacjaDotNetProjekt.Database.Models;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +30,9 @@ namespace AplikacjaDotNetProjekt.Database.Services
             _dbContext.SaveChanges();
         }
 
-        public List<Product> GetProductsInMeal(int mealId)
+        public List<Recipe> GetRecipeByMealId(int mealId)
         {
-            return _dbContext.Recipes
-                .Where(mp => mp.MealId == mealId)
-                .Select(mp => mp.Product)
-                .ToList();
+            return _dbContext.Recipes.Where(r => r.MealId == mealId).ToList();
         }
     }
 }
