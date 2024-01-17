@@ -59,12 +59,22 @@
             addTraining_button.UseVisualStyleBackColor = true;
             addTraining_button.Click += addTraining_button_Click;
             // 
+            // addMeal_button
+            // 
+            addMeal_button.Location = new Point(41, 142);
+            addMeal_button.Name = "addMeal_button";
+            addMeal_button.Size = new Size(86, 45);
+            addMeal_button.TabIndex = 2;
+            addMeal_button.Text = "Add a meal";
+            addMeal_button.UseVisualStyleBackColor = true;
+            addMeal_button.Click += addMeal_button_Click;
+            // 
             // user_label
             // 
             user_label.AutoSize = true;
             user_label.Location = new Point(12, 9);
             user_label.Name = "user_label";
-            user_label.Size = new Size(36, 20);
+            user_label.Size = new Size(29, 15);
             user_label.TabIndex = 3;
             user_label.Text = "user";
             // 
@@ -88,6 +98,22 @@
             addMeasurement_button.Text = "Add measurement";
             addMeasurement_button.UseVisualStyleBackColor = true;
             addMeasurement_button.Click += addMeasurement_button_Click;
+            //
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(237, 41);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(238, 23);
+            dateTimePicker1.TabIndex = 5;
+            dateTimePicker1.Value = new DateTime(2024, 1, 17, 13, 9, 49, 0);
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
+            // 
+            // tv
+            // 
+            tv.Location = new Point(224, 189);
+            tv.Name = "tv";
+            tv.Size = new Size(284, 225);
+            tv.TabIndex = 6;
             // 
             // dateTimePicker1
             // 
@@ -128,6 +154,7 @@
             Controls.Add(addMeal_button);
             Controls.Add(addTraining_button);
             Margin = new Padding(3, 4, 3, 4);
+
             Name = "HomePage";
             Text = "Home Page";
             FormClosed += HomePage_FormClosed;

@@ -237,7 +237,6 @@ namespace AplikacjaDotNetProjekt
         {
             DeleteIndexFromProductTable(e.RowIndex);
         }
-
         private void log_label_resize(object sender, EventArgs e)
         {
             int containerWidth = this.Width; // Zastąp to kontrolką, której szerokość ma być brana pod uwagę

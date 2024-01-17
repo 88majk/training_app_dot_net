@@ -17,6 +17,7 @@ namespace AplikacjaDotNetProjekt
         private Database.Services.TrainingService _trainingService;
         private Database.Services.ExercisesInTrainingService _EITService;
         private DBContext _dbContext;
+        
         List<string> typeMealList = new List<string>() { "Breakfast", "Brunch", "Dinner", "Dessert", "Lunch", "Supper", "Snack" };
 
         public HomePage(Login login)
@@ -85,7 +86,6 @@ namespace AplikacjaDotNetProjekt
             if (addMeal != null)
             {
                 addMeal.Close();
-
             }
             DateTime currentDate = dateTimePicker1.Value.Date;
             List<UserMeal> allMealsToday = _userMeal.GetUserMealsForDate(currentDate, user.Id);
@@ -170,6 +170,7 @@ namespace AplikacjaDotNetProjekt
 
             }
         }
+
         private void addMeasurement_button_Click(object sender, EventArgs e)
         {
             if (addMeasurement == null || addMeasurement.IsDisposed)
@@ -186,7 +187,6 @@ namespace AplikacjaDotNetProjekt
 
                 addMeasurement.BringToFront();
                 addMeasurement.Focus();
-            }
         }
     }
 }
