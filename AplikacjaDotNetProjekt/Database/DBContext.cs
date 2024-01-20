@@ -30,13 +30,5 @@ namespace AplikacjaDotNetProjekt.Database
             }
         }
 
-        public List<CatalogExercise> GetExercisesFromDB()
-        {
-            using (var context = new DBContext())
-            {
-                List <CatalogExercise> records = context.CatalogExercises.ToList();
-                return records;
-            }
-        }
-    }
+    } 
 }

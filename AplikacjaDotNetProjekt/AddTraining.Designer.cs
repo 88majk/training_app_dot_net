@@ -35,7 +35,6 @@
             currExercises_dataGridView = new DataGridView();
             saveWorkout_button = new Button();
             titleTraininig_label = new Label();
-            error_label = new Label();
             kgUnit_label = new Label();
             weight_textBox = new TextBox();
             reps_textBox = new TextBox();
@@ -48,6 +47,7 @@
             exercises_comboBox = new ComboBox();
             selectMuscleParts_label = new Label();
             selectTraining_panel = new Panel();
+            returnSavedTrainings_button = new Button();
             inform_label = new Label();
             saveAsDone_button = new Button();
             label3 = new Label();
@@ -56,6 +56,7 @@
             workout_dataGridView = new DataGridView();
             savedTrainings_comboBox = new ComboBox();
             addNewExercise_panel = new Panel();
+            returnAddExercise_button = new Button();
             addNewExercise_checkecComboBox = new CheckedListBox();
             logExercise_label = new Label();
             addNewExercise_label = new Label();
@@ -63,10 +64,16 @@
             addNewExercise2DB_button = new Button();
             label2 = new Label();
             nameTraining_panel = new Panel();
+            returnTrainingName_button = new Button();
+            label4 = new Label();
+            errorTraining_label = new Label();
+            editTraining_button = new Button();
+            savedNames_comboBox = new ComboBox();
             nameTraining_button = new Button();
             trainingName_label = new Label();
             trainingName_textBox = new TextBox();
             addNewExercise_button = new Button();
+            deleteTraining_button = new Button();
             addTraining_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)currExercises_dataGridView).BeginInit();
             selectTraining_panel.SuspendLayout();
@@ -101,16 +108,16 @@
             addNewTraining_button.Name = "addNewTraining_button";
             addNewTraining_button.Size = new Size(159, 83);
             addNewTraining_button.TabIndex = 2;
-            addNewTraining_button.Text = "Add new training set";
+            addNewTraining_button.Text = "Add/edit training set";
             addNewTraining_button.UseVisualStyleBackColor = true;
             addNewTraining_button.Click += addNewTraining_button_Click;
             // 
             // addTraining_panel
             // 
+            addTraining_panel.Controls.Add(deleteTraining_button);
             addTraining_panel.Controls.Add(currExercises_dataGridView);
             addTraining_panel.Controls.Add(saveWorkout_button);
             addTraining_panel.Controls.Add(titleTraininig_label);
-            addTraining_panel.Controls.Add(error_label);
             addTraining_panel.Controls.Add(kgUnit_label);
             addTraining_panel.Controls.Add(weight_textBox);
             addTraining_panel.Controls.Add(reps_textBox);
@@ -138,17 +145,18 @@
             currExercises_dataGridView.Size = new Size(455, 188);
             currExercises_dataGridView.TabIndex = 24;
             currExercises_dataGridView.CellClick += currExercises_dataGridView_CellClick;
-            currExercises_dataGridView.CellDoubleClick += currExercises_dataGridView_CellDoubleClick;
             currExercises_dataGridView.CellEndEdit += currExercises_dataGridView_CellEndEdit;
+            currExercises_dataGridView.CellMouseUp += currExercises_dataGridView_CellMouseUp;
             // 
             // saveWorkout_button
             // 
-            saveWorkout_button.Location = new Point(549, 262);
+            saveWorkout_button.Location = new Point(619, 262);
             saveWorkout_button.Name = "saveWorkout_button";
             saveWorkout_button.Size = new Size(128, 29);
             saveWorkout_button.TabIndex = 23;
             saveWorkout_button.Text = "Save workout";
             saveWorkout_button.UseVisualStyleBackColor = true;
+            saveWorkout_button.Click += saveWorkout_button_Click;
             // 
             // titleTraininig_label
             // 
@@ -158,15 +166,6 @@
             titleTraininig_label.Size = new Size(151, 20);
             titleTraininig_label.TabIndex = 22;
             titleTraininig_label.Text = "Your current exercises";
-            // 
-            // error_label
-            // 
-            error_label.AutoSize = true;
-            error_label.Location = new Point(82, 332);
-            error_label.Name = "error_label";
-            error_label.Size = new Size(22, 20);
-            error_label.TabIndex = 21;
-            error_label.Text = "id";
             // 
             // kgUnit_label
             // 
@@ -266,6 +265,7 @@
             // 
             // selectTraining_panel
             // 
+            selectTraining_panel.Controls.Add(returnSavedTrainings_button);
             selectTraining_panel.Controls.Add(inform_label);
             selectTraining_panel.Controls.Add(saveAsDone_button);
             selectTraining_panel.Controls.Add(label3);
@@ -279,6 +279,16 @@
             selectTraining_panel.TabIndex = 13;
             selectTraining_panel.Visible = false;
             // 
+            // returnSavedTrainings_button
+            // 
+            returnSavedTrainings_button.Location = new Point(374, 433);
+            returnSavedTrainings_button.Name = "returnSavedTrainings_button";
+            returnSavedTrainings_button.Size = new Size(94, 29);
+            returnSavedTrainings_button.TabIndex = 18;
+            returnSavedTrainings_button.Text = "Return";
+            returnSavedTrainings_button.UseVisualStyleBackColor = true;
+            returnSavedTrainings_button.Click += returnSavedTrainings_button_Click;
+            // 
             // inform_label
             // 
             inform_label.AutoSize = true;
@@ -287,6 +297,7 @@
             inform_label.Size = new Size(50, 20);
             inform_label.TabIndex = 6;
             inform_label.Text = "label4";
+            inform_label.Visible = false;
             // 
             // saveAsDone_button
             // 
@@ -346,6 +357,7 @@
             // 
             // addNewExercise_panel
             // 
+            addNewExercise_panel.Controls.Add(returnAddExercise_button);
             addNewExercise_panel.Controls.Add(addNewExercise_checkecComboBox);
             addNewExercise_panel.Controls.Add(logExercise_label);
             addNewExercise_panel.Controls.Add(addNewExercise_label);
@@ -358,27 +370,38 @@
             addNewExercise_panel.TabIndex = 10;
             addNewExercise_panel.Visible = false;
             // 
+            // returnAddExercise_button
+            // 
+            returnAddExercise_button.Location = new Point(270, 332);
+            returnAddExercise_button.Name = "returnAddExercise_button";
+            returnAddExercise_button.Size = new Size(94, 29);
+            returnAddExercise_button.TabIndex = 19;
+            returnAddExercise_button.Text = "Return";
+            returnAddExercise_button.UseVisualStyleBackColor = true;
+            returnAddExercise_button.Click += returnAddExercise_button_Click;
+            // 
             // addNewExercise_checkecComboBox
             // 
             addNewExercise_checkecComboBox.FormattingEnabled = true;
-            addNewExercise_checkecComboBox.Location = new Point(238, 103);
+            addNewExercise_checkecComboBox.Location = new Point(252, 103);
             addNewExercise_checkecComboBox.Name = "addNewExercise_checkecComboBox";
             addNewExercise_checkecComboBox.Size = new Size(150, 136);
             addNewExercise_checkecComboBox.TabIndex = 11;
             // 
             // logExercise_label
             // 
-            logExercise_label.Location = new Point(146, 280);
+            logExercise_label.Location = new Point(160, 280);
             logExercise_label.Name = "logExercise_label";
             logExercise_label.Size = new Size(322, 32);
             logExercise_label.TabIndex = 10;
             logExercise_label.Text = "label1";
             logExercise_label.TextAlign = ContentAlignment.MiddleCenter;
+            logExercise_label.Visible = false;
             // 
             // addNewExercise_label
             // 
             addNewExercise_label.AutoSize = true;
-            addNewExercise_label.Location = new Point(243, 9);
+            addNewExercise_label.Location = new Point(257, 9);
             addNewExercise_label.Name = "addNewExercise_label";
             addNewExercise_label.Size = new Size(125, 20);
             addNewExercise_label.TabIndex = 9;
@@ -386,7 +409,7 @@
             // 
             // newExerciseName_textBox
             // 
-            newExerciseName_textBox.Location = new Point(228, 34);
+            newExerciseName_textBox.Location = new Point(242, 34);
             newExerciseName_textBox.Name = "newExerciseName_textBox";
             newExerciseName_textBox.Size = new Size(182, 27);
             newExerciseName_textBox.TabIndex = 8;
@@ -394,7 +417,7 @@
             // 
             // addNewExercise2DB_button
             // 
-            addNewExercise2DB_button.Location = new Point(248, 248);
+            addNewExercise2DB_button.Location = new Point(262, 248);
             addNewExercise2DB_button.Name = "addNewExercise2DB_button";
             addNewExercise2DB_button.Size = new Size(117, 29);
             addNewExercise2DB_button.TabIndex = 7;
@@ -405,7 +428,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(241, 80);
+            label2.Location = new Point(255, 80);
             label2.Name = "label2";
             label2.Size = new Size(139, 20);
             label2.TabIndex = 4;
@@ -413,18 +436,71 @@
             // 
             // nameTraining_panel
             // 
+            nameTraining_panel.Controls.Add(returnTrainingName_button);
+            nameTraining_panel.Controls.Add(label4);
+            nameTraining_panel.Controls.Add(errorTraining_label);
+            nameTraining_panel.Controls.Add(editTraining_button);
+            nameTraining_panel.Controls.Add(savedNames_comboBox);
             nameTraining_panel.Controls.Add(nameTraining_button);
             nameTraining_panel.Controls.Add(trainingName_label);
             nameTraining_panel.Controls.Add(trainingName_textBox);
-            nameTraining_panel.Location = new Point(289, 109);
+            nameTraining_panel.Location = new Point(274, 109);
             nameTraining_panel.Name = "nameTraining_panel";
-            nameTraining_panel.Size = new Size(250, 145);
+            nameTraining_panel.Size = new Size(281, 314);
             nameTraining_panel.TabIndex = 12;
             nameTraining_panel.Visible = false;
             // 
+            // returnTrainingName_button
+            // 
+            returnTrainingName_button.Location = new Point(97, 282);
+            returnTrainingName_button.Name = "returnTrainingName_button";
+            returnTrainingName_button.Size = new Size(94, 29);
+            returnTrainingName_button.TabIndex = 17;
+            returnTrainingName_button.Text = "Return";
+            returnTrainingName_button.UseVisualStyleBackColor = true;
+            returnTrainingName_button.Click += returnTrainingName_button_Click;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(70, 167);
+            label4.Name = "label4";
+            label4.Size = new Size(142, 20);
+            label4.TabIndex = 16;
+            label4.Text = "or edit previous one";
+            // 
+            // errorTraining_label
+            // 
+            errorTraining_label.AutoSize = true;
+            errorTraining_label.ForeColor = Color.Red;
+            errorTraining_label.Location = new Point(3, 133);
+            errorTraining_label.Name = "errorTraining_label";
+            errorTraining_label.Size = new Size(50, 20);
+            errorTraining_label.TabIndex = 15;
+            errorTraining_label.Text = "label4";
+            errorTraining_label.Visible = false;
+            // 
+            // editTraining_button
+            // 
+            editTraining_button.Location = new Point(50, 229);
+            editTraining_button.Name = "editTraining_button";
+            editTraining_button.Size = new Size(181, 29);
+            editTraining_button.TabIndex = 14;
+            editTraining_button.Text = "Edit training";
+            editTraining_button.UseVisualStyleBackColor = true;
+            editTraining_button.Click += editTraining_button_Click;
+            // 
+            // savedNames_comboBox
+            // 
+            savedNames_comboBox.FormattingEnabled = true;
+            savedNames_comboBox.Location = new Point(50, 190);
+            savedNames_comboBox.Name = "savedNames_comboBox";
+            savedNames_comboBox.Size = new Size(181, 28);
+            savedNames_comboBox.TabIndex = 13;
+            // 
             // nameTraining_button
             // 
-            nameTraining_button.Location = new Point(34, 101);
+            nameTraining_button.Location = new Point(50, 101);
             nameTraining_button.Name = "nameTraining_button";
             nameTraining_button.Size = new Size(181, 29);
             nameTraining_button.TabIndex = 12;
@@ -435,7 +511,7 @@
             // trainingName_label
             // 
             trainingName_label.AutoSize = true;
-            trainingName_label.Location = new Point(49, 36);
+            trainingName_label.Location = new Point(65, 36);
             trainingName_label.Name = "trainingName_label";
             trainingName_label.Size = new Size(137, 20);
             trainingName_label.TabIndex = 11;
@@ -443,7 +519,7 @@
             // 
             // trainingName_textBox
             // 
-            trainingName_textBox.Location = new Point(34, 61);
+            trainingName_textBox.Location = new Point(50, 61);
             trainingName_textBox.Name = "trainingName_textBox";
             trainingName_textBox.Size = new Size(182, 27);
             trainingName_textBox.TabIndex = 10;
@@ -459,6 +535,16 @@
             addNewExercise_button.UseVisualStyleBackColor = true;
             addNewExercise_button.Click += addNewExercise_button_Click;
             // 
+            // deleteTraining_button
+            // 
+            deleteTraining_button.Location = new Point(485, 262);
+            deleteTraining_button.Name = "deleteTraining_button";
+            deleteTraining_button.Size = new Size(128, 29);
+            deleteTraining_button.TabIndex = 25;
+            deleteTraining_button.Text = "Delete training";
+            deleteTraining_button.UseVisualStyleBackColor = true;
+            deleteTraining_button.Click += deleteTraining_button_Click;
+            // 
             // AddTraining
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -470,8 +556,8 @@
             Controls.Add(selectTraining_button);
             Controls.Add(title_label);
             Controls.Add(nameTraining_panel);
-            Controls.Add(addNewExercise_panel);
             Controls.Add(selectTraining_panel);
+            Controls.Add(addNewExercise_panel);
             Name = "AddTraining";
             Text = "AddTraining";
             addTraining_panel.ResumeLayout(false);
@@ -517,7 +603,6 @@
         private TextBox weight_textBox;
         private TextBox reps_textBox;
         private Label kgUnit_label;
-        private Label error_label;
         private Label titleTraininig_label;
         private Button saveWorkout_button;
         private Panel selectTraining_panel;
@@ -529,5 +614,13 @@
         private Button saveAsDone_button;
         private Label inform_label;
         private DataGridView currExercises_dataGridView;
+        private ComboBox savedNames_comboBox;
+        private Button editTraining_button;
+        private Label errorTraining_label;
+        private Label label4;
+        private Button returnTrainingName_button;
+        private Button returnSavedTrainings_button;
+        private Button returnAddExercise_button;
+        private Button deleteTraining_button;
     }
 }

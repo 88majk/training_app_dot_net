@@ -44,6 +44,7 @@
             Protein = new DataGridViewTextBoxColumn();
             Salt = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)nutriments_table).BeginInit();
+            sqlCommandBuilder1 = new Microsoft.Data.SqlClient.SqlCommandBuilder();
             SuspendLayout();
             // 
             // addMeal_button
@@ -99,18 +100,23 @@
             addMeasurement_button.UseVisualStyleBackColor = true;
             addMeasurement_button.Click += addMeasurement_button_Click;
             // 
-            // dateChoose_dateClicker
+            // dateTimePicker1
             // 
+            dateChoose_dateClicker.ImeMode = ImeMode.NoControl;
             dateChoose_dateClicker.Location = new Point(210, 62);
+            dateChoose_dateClicker.MaxDate = new DateTime(2100, 12, 31, 0, 0, 0, 0);
+            dateChoose_dateClicker.MinDate = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             dateChoose_dateClicker.Margin = new Padding(3, 2, 3, 2);
             dateChoose_dateClicker.Name = "dateChoose_dateClicker";
             dateChoose_dateClicker.Size = new Size(249, 23);
             dateChoose_dateClicker.TabIndex = 5;
-            dateChoose_dateClicker.Value = new DateTime(2024, 1, 17, 13, 9, 49, 0);
+            dateChoose_dateClicker.Value = new DateTime(2024, 1, 20, 0, 0, 0, 0);
             dateChoose_dateClicker.ValueChanged += dateTimePicker1_ValueChanged;
             // 
             // tv
             // 
+            tv.BackColor = SystemColors.ControlLightLight;
+            tv.LineColor = Color.DimGray;
             tv.Location = new Point(13, 89);
             tv.Margin = new Padding(3, 2, 3, 2);
             tv.Name = "tv";
@@ -167,13 +173,19 @@
             // 
             Salt.HeaderText = "Salt";
             Salt.Name = "Salt";
+            // sqlCommandBuilder1
+            // 
+            sqlCommandBuilder1.DataAdapter = null;
+            sqlCommandBuilder1.QuotePrefix = "[";
+            sqlCommandBuilder1.QuoteSuffix = "]";
             // 
             // HomePage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 388);
             Controls.Add(nutriments_table);
+            BackColor = SystemColors.Menu;
+            ClientSize = new Size(700, 388);
             Controls.Add(todaysExercises_listBox);
             Controls.Add(tv);
             Controls.Add(dateChoose_dateClicker);
@@ -206,5 +218,7 @@
         private DataGridViewTextBoxColumn Fiber;
         private DataGridViewTextBoxColumn Protein;
         private DataGridViewTextBoxColumn Salt;
+        private Microsoft.Data.SqlClient.SqlCommandBuilder sqlCommandBuilder1;
+
     }
 }

@@ -47,7 +47,7 @@ namespace AplikacjaDotNetProjekt.Database.Services
             
         }
 
-        public void DeleteExerciseFromTraining(int trainingId, int exerciseId)
+        public async Task DeleteExerciseFromTraining(int trainingId, int exerciseId)
         {
             var exerciseInTraining = _dbContext.Workouts
                 .FirstOrDefault(w => w.TrainingId == trainingId && w.ExerciseId == exerciseId);
