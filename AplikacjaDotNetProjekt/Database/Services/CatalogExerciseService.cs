@@ -101,5 +101,15 @@ namespace AplikacjaDotNetProjekt.Database.Services
             string sqlQuery = $"SELECT * FROM CatalogExercises WHERE Name LIKE '%{search}%'";
             return _dbContext.CatalogExercises.FromSqlRaw(sqlQuery).ToList();
         }
+
+        public List<CatalogExercise> GetExercisesFromDB()
+        {
+            using (var context = new DBContext())
+            {
+                List<CatalogExercise> records = context.CatalogExercises.ToList();
+                return records;
+            }
+        }
     }
 }
+

@@ -105,7 +105,7 @@ namespace AplikacjaDotNetProjekt
             }
         }
 
-        private void InitializeTodaysExercises()
+        public void InitializeTodaysExercises()
         {
             DateTime currentDate = dateTimePicker1.Value.Date;
             List<Training> todayTraining = _trainingService.GetTodaysTraining(user.Id, currentDate);
@@ -155,7 +155,7 @@ namespace AplikacjaDotNetProjekt
             if (addTraining == null || addTraining.IsDisposed)
             {
                 DateTime selectedDate = dateTimePicker1.Value;
-                addTraining = new AddTraining(selectedDate, user.Id);
+                addTraining = new AddTraining(this, selectedDate, user.Id);
                 addTraining.Show();
             }
             else

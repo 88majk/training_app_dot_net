@@ -40,8 +40,9 @@ namespace AplikacjaDotNetProjekt
         private int userId;
         DateTime todaysDate;
 
+        private HomePage homePage;
 
-        public AddTraining(DateTime selectedDate, int id)
+        public AddTraining(HomePage homePage, DateTime selectedDate, int id)
         {
             userId = id;
             todaysDate = selectedDate;
@@ -52,6 +53,8 @@ namespace AplikacjaDotNetProjekt
             _EITService = new Database.Services.ExercisesInTrainingService(new DBContext());
 
             currExercises_dataGridView.CellClick += currExercises_dataGridView_CellClick;
+
+            this.homePage = homePage;
         }
 
         private void addNewTraining_button_Click(object sender, EventArgs e)
@@ -65,12 +68,26 @@ namespace AplikacjaDotNetProjekt
 
             nameTraining_panel.Visible = true;
 
+            List<Training> trainings = _trainingService.GetTrainingsFromDatabase(userId);
+
+            foreach (var item in trainings)
+            {
+                savedNames_comboBox.Items.Add(item.ToString());
+            }
         }
+
         private void hideActionTypeButtons()
         {
             addNewTraining_button.Visible = false;
             addNewExercise_button.Visible = false;
             selectTraining_button.Visible = false;
+        }
+
+        private void showActionTypeButtons()
+        {
+            addNewTraining_button.Visible = true;
+            addNewExercise_button.Visible = true;
+            selectTraining_button.Visible = true;
         }
 
         private void addNewExercise_button_Click(object sender, EventArgs e)
@@ -107,7 +124,7 @@ namespace AplikacjaDotNetProjekt
             }
 
             string concatenatedValues = string.Join(",", selectedValues);
-
+            logExercise_label.Visible = true;
             if (_catalogExerciseService.DoesExerciseExists(newExerciseName))
             {
                 logExercise_label.Text = $"Exericise with name {newExerciseName} already exists.";
@@ -131,6 +148,18 @@ namespace AplikacjaDotNetProjekt
             }
         }
 
+        private void returnAddExercise_button_Click(object sender, EventArgs e)
+        {
+            addNewExercise_panel.Visible = false;
+            showActionTypeButtons();
+        }
+
+        private void returnTrainingName_button_Click(object sender, EventArgs e)
+        {
+            nameTraining_panel.Visible = false;
+            showActionTypeButtons();
+        }
+
         ////////////////////////////////////////////////////////
         //////// OBSLUGA DODAWANIA NOWEGO TRENINGU /////////////
         ////////////////////////////////////////////////////////
@@ -142,31 +171,8 @@ namespace AplikacjaDotNetProjekt
             int trainingID = _trainingService.GetTrainingIdByName(trainingName_textBox.Text);
             if (_trainingService.DoesTrainingExists(trainingName_textBox.Text))
             {
-                DialogResult result = MessageBox.Show("Czy chcesz edytować ten trening?", "Podany trening już istnieje.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    addTraining_panel.Visible = true;
-                    nameTraining_panel.Visible = false;
-
-                    List<ExercisesInTraining> exercisesInTraining = _EITService.GetAllExercisesInTraining(trainingID);
-
-                    List<ExercisesInTrainingDisplay> displayList =
-                    exercisesInTraining.Select(exercise => new ExercisesInTrainingDisplay
-                    {
-                        ExerciseName = _dbContext.CatalogExercises.FirstOrDefault(c => c.Id == exercise.ExerciseId)?.Name,
-                        Sets = exercise.Sets,
-                        Reps = exercise.Reps,
-                        Weight = exercise.Weight
-                    })
-                .ToList();
-
-                    currExercises_dataGridView.DataSource = displayList;
-                    for (int i = 0; i < workout_dataGridView.Columns.Count && i < newColumnNames.Length; i++)
-                    {
-                        workout_dataGridView.Columns[i].HeaderText = newColumnNames[i];
-                    }
-                }
-                check_label.Text = trainingName_textBox.Text;
+                errorTraining_label.Visible = true;
+                errorTraining_label.Text = $"Training with name {trainingName_textBox.Text} already exists.";
             }
             else
             {
@@ -183,6 +189,34 @@ namespace AplikacjaDotNetProjekt
             }
         }
 
+        // przycisk edytowania treningu
+        private void editTraining_button_Click(object sender, EventArgs e)
+        {
+            int trainingID = _trainingService.GetTrainingIdByName(savedNames_comboBox.SelectedItem.ToString());
+
+            addTraining_panel.Visible = true;
+            nameTraining_panel.Visible = false;
+
+            List<ExercisesInTraining> exercisesInTraining = _EITService.GetAllExercisesInTraining(trainingID);
+
+            List<ExercisesInTrainingDisplay> displayList =
+            exercisesInTraining.Select(exercise => new ExercisesInTrainingDisplay
+            {
+                ExerciseName = _dbContext.CatalogExercises.FirstOrDefault(c => c.Id == exercise.ExerciseId)?.Name,
+                Sets = exercise.Sets,
+                Reps = exercise.Reps,
+                Weight = exercise.Weight
+            })
+        .ToList();
+
+            currExercises_dataGridView.DataSource = displayList;
+            for (int i = 0; i < workout_dataGridView.Columns.Count && i < newColumnNames.Length; i++)
+            {
+                workout_dataGridView.Columns[i].HeaderText = newColumnNames[i];
+            }
+
+            check_label.Text = savedNames_comboBox.SelectedItem.ToString();
+        }
 
         // Zapisywanie kolejnych ćwiczeń treningu
         private void addExercise_button_Click(object sender, EventArgs e)
@@ -202,7 +236,7 @@ namespace AplikacjaDotNetProjekt
             }
             catch (Exception ex)
             {
-                error_label.Text = ex.Message;
+                //error_label.Text = ex.Message;
             }
 
             List<ExercisesInTraining> exercisesInTraining = _EITService.GetAllExercisesInTraining(_trainingService.GetTrainingIdByName(check_label.Text));
@@ -241,14 +275,31 @@ namespace AplikacjaDotNetProjekt
 
         }
 
+        private void currExercises_dataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                currExercises_dataGridView.CurrentCell = currExercises_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+                ContextMenuStrip contextMenu = new ContextMenuStrip();
+
+                ToolStripMenuItem deleteMenuItem = new ToolStripMenuItem("Usuń");
+                deleteMenuItem.Click += DeleteMenuItem_Click;
+                contextMenu.Items.Add(deleteMenuItem);
+
+                contextMenu.Show(currExercises_dataGridView, currExercises_dataGridView.PointToClient(Cursor.Position));
+            }
+        }
+
+
         // USUWANIE CWICZENIA Z GRIDVIEW
         private List<ExercisesInTraining> records = new List<ExercisesInTraining>();
 
-        private void currExercises_dataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DeleteMenuItem_Click(object sender, EventArgs e)
         {
             if (currExercises_dataGridView.SelectedRows.Count >= 0)
             {
-                int selectedRowIndex = currExercises_dataGridView.SelectedRows[0].Index;
+                int selectedRowIndex = currExercises_dataGridView.CurrentCell.RowIndex;
                 ExercisesInTrainingDisplay selectedRecord = (ExercisesInTrainingDisplay)currExercises_dataGridView.Rows[selectedRowIndex].DataBoundItem;
 
                 int exerciseIdToDelete = _EITService.GetExerciseIdByName(selectedRecord.ExerciseName);
@@ -287,13 +338,11 @@ namespace AplikacjaDotNetProjekt
             if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
             {
                 object editedValue = currExercises_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                int exerciseId =_EITService.GetExerciseIdByName(currExercises_dataGridView.Rows[e.RowIndex].Cells["ExerciseName"].Value.ToString());
-                int sets =_EITService.GetExerciseIdByName(currExercises_dataGridView.Rows[e.RowIndex].Cells["Sets"].Value.ToString());
-                int reps =_EITService.GetExerciseIdByName(currExercises_dataGridView.Rows[e.RowIndex].Cells["Reps"].Value.ToString());
+                int exerciseId = _EITService.GetExerciseIdByName(currExercises_dataGridView.Rows[e.RowIndex].Cells["ExerciseName"].Value.ToString());
                 int trainingId = _trainingService.GetTrainingIdByName(check_label.Text);
 
                 var recordToUpdate = _dbContext.Workouts
-                    .FirstOrDefault(w => w.ExerciseId == exerciseId && w.TrainingId == trainingId && w.Sets == sets && w.Reps == reps);
+                    .FirstOrDefault(w => w.ExerciseId == exerciseId && w.TrainingId == trainingId);
 
                 if (recordToUpdate != null)
                 {
@@ -330,6 +379,14 @@ namespace AplikacjaDotNetProjekt
             }
         }
 
+        private void deleteTraining_button_Click(object sender, EventArgs e)
+        {
+            int trainingId = _trainingService.GetTrainingIdByName(check_label.Text);
+            _trainingService.DeleteTrainingFromDB(userId, trainingId);
+            homePage.InitializeTodaysExercises();
+            this.Dispose();
+        }
+
         private void exercises_comboBox_MouseClick(object sender, MouseEventArgs e)
         {
             List<string> selectedMuscleParts = new List<string>();
@@ -362,7 +419,7 @@ namespace AplikacjaDotNetProjekt
 
             else
             {
-                List<CatalogExercise> allExercises = _dbContext.GetExercisesFromDB();
+                List<CatalogExercise> allExercises = _catalogExerciseService.GetExercisesFromDB();
                 foreach (var exercise in allExercises)
                 {
                     exercises_comboBox.Items.Add(exercise.ToString());
@@ -427,8 +484,23 @@ namespace AplikacjaDotNetProjekt
             {
                 int workoutId = _EITService.SaveWorkout(item);
             }
-
-            inform_label.Text = $"Good job! Workout with id {trainingId} added to history";
+            inform_label.Visible = true;
+            inform_label.Text = $"Good job! Workout added to history!";
+            homePage.InitializeTodaysExercises();
         }
+
+        private void saveWorkout_button_Click(object sender, EventArgs e)
+        {
+            homePage.InitializeTodaysExercises();
+            this.Dispose();
+        }
+
+        private void returnSavedTrainings_button_Click(object sender, EventArgs e)
+        {
+            selectTraining_panel.Visible = false;
+            showActionTypeButtons();
+        }
+
+        
     }
 }
