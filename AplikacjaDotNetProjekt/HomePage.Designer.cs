@@ -36,6 +36,7 @@
             dateTimePicker1 = new DateTimePicker();
             tv = new TreeView();
             todaysExercises_listBox = new ListBox();
+            sqlCommandBuilder1 = new Microsoft.Data.SqlClient.SqlCommandBuilder();
             SuspendLayout();
             // 
             // addMeal_button
@@ -91,15 +92,20 @@
             // 
             // dateTimePicker1
             // 
+            dateTimePicker1.ImeMode = ImeMode.NoControl;
             dateTimePicker1.Location = new Point(240, 82);
+            dateTimePicker1.MaxDate = new DateTime(2100, 12, 31, 0, 0, 0, 0);
+            dateTimePicker1.MinDate = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(284, 27);
             dateTimePicker1.TabIndex = 5;
-            dateTimePicker1.Value = new DateTime(2024, 1, 17, 13, 9, 49, 0);
+            dateTimePicker1.Value = new DateTime(2024, 1, 20, 0, 0, 0, 0);
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             // 
             // tv
             // 
+            tv.BackColor = SystemColors.ControlLightLight;
+            tv.LineColor = Color.DimGray;
             tv.Location = new Point(53, 115);
             tv.Name = "tv";
             tv.Size = new Size(284, 225);
@@ -114,10 +120,17 @@
             todaysExercises_listBox.Size = new Size(322, 224);
             todaysExercises_listBox.TabIndex = 7;
             // 
+            // sqlCommandBuilder1
+            // 
+            sqlCommandBuilder1.DataAdapter = null;
+            sqlCommandBuilder1.QuotePrefix = "[";
+            sqlCommandBuilder1.QuoteSuffix = "]";
+            // 
             // HomePage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Menu;
             ClientSize = new Size(800, 450);
             Controls.Add(todaysExercises_listBox);
             Controls.Add(tv);
@@ -144,5 +157,6 @@
         private DateTimePicker dateTimePicker1;
         private TreeView tv;
         private ListBox todaysExercises_listBox;
+        private Microsoft.Data.SqlClient.SqlCommandBuilder sqlCommandBuilder1;
     }
 }

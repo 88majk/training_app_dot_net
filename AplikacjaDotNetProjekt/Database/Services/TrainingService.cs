@@ -65,5 +65,20 @@ namespace AplikacjaDotNetProjekt.Database.Services
                 .ToList();
         }
 
+        public async Task DeleteTrainingFromDB(int userId, int trainingId)
+        {
+            var training = _dbContext.Trainings
+                .FirstOrDefault(w => w.Id == trainingId && w.User_ID == userId);
+
+            if (training != null)
+            {
+                _dbContext.Trainings.Remove(training);
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("Nie znaleziono treningu", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
