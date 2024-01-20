@@ -1,6 +1,8 @@
 using AplikacjaDotNetProjekt.Database;
 using AplikacjaDotNetProjekt.Database.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Windows.Forms;
+using System.Windows.Media.Media3D;
 
 namespace AplikacjaDotNetProjekt
 {
@@ -14,10 +16,12 @@ namespace AplikacjaDotNetProjekt
         private bool isLogOut = false;
         private Database.Services.UserMealService _userMeal;
         private Database.Services.MealService _meal;
+        private Database.Services.RecipeService _recipe;
+        private Database.Services.ProductService _product;
         private Database.Services.TrainingService _trainingService;
         private Database.Services.ExercisesInTrainingService _EITService;
         private DBContext _dbContext;
-        
+
         List<string> typeMealList = new List<string>() { "Breakfast", "Brunch", "Dinner", "Dessert", "Lunch", "Supper", "Snack" };
 
         public HomePage(Login login)
@@ -28,6 +32,8 @@ namespace AplikacjaDotNetProjekt
             _login = login;
             _userMeal = new Database.Services.UserMealService(new DBContext());
             _meal = new Database.Services.MealService(new DBContext());
+            _recipe = new Database.Services.RecipeService(new DBContext());
+            _product = new Database.Services.ProductService(new DBContext());
             _trainingService = new Database.Services.TrainingService(new DBContext());
             _EITService = new Database.Services.ExercisesInTrainingService(new DBContext());
             _dbContext = new DBContext();
@@ -44,7 +50,7 @@ namespace AplikacjaDotNetProjekt
         {
             if (addMeal == null || addMeal.IsDisposed)
             {
-                DateTime selectedDate = dateTimePicker1.Value;
+                DateTime selectedDate = dateChoose_dateClicker.Value;
                 addMeal = new AddMeal(user, selectedDate, this);
                 addMeal.Show();
 
@@ -87,11 +93,15 @@ namespace AplikacjaDotNetProjekt
             {
                 addMeal.Close();
             }
-            DateTime currentDate = dateTimePicker1.Value.Date;
+            DateTime currentDate = dateChoose_dateClicker.Value.Date;
             List<UserMeal> allMealsToday = _userMeal.GetUserMealsForDate(currentDate, user.Id);
             if (tv.Nodes.Count > 0)
             {
                 tv.Nodes.Clear();
+            }
+            if (nutriments_table.RowCount > 0)
+            {
+                nutriments_table.Rows.Clear();
             }
             foreach (string type in typeMealList)
             {
@@ -107,9 +117,9 @@ namespace AplikacjaDotNetProjekt
 
         public void InitializeTodaysExercises()
         {
-            DateTime currentDate = dateTimePicker1.Value.Date;
+            DateTime currentDate = dateChoose_dateClicker.Value.Date;
             List<Training> todayTraining = _trainingService.GetTodaysTraining(user.Id, currentDate);
-            
+
             todaysExercises_listBox.Items.Clear();
             int i = 0;
             foreach (Training training in todayTraining)
@@ -130,7 +140,7 @@ namespace AplikacjaDotNetProjekt
                 foreach (var item in displayList)
                 {
                     i++;
-                    todaysExercises_listBox.Items.Add(i + ". "+ item.ToString());
+                    todaysExercises_listBox.Items.Add(i + ". " + item.ToString());
                 }
             }
         }
@@ -146,6 +156,35 @@ namespace AplikacjaDotNetProjekt
                     {
                         TreeNode mealNode = new TreeNode(meal.Name);
                         node.Nodes.Add(mealNode);
+                        List<Recipe> recipes = _recipe.GetRecipeByMealId(meal.Id);
+                        if (recipes != null)
+                        {
+                            foreach (Recipe recipe in recipes)
+                            {
+                                Product product = _product.GetProductById(recipe.ProductId);
+                                if (nutriments_table.RowCount < 1)
+                                {
+                                    // To pierwszy produkt, dodaj nutriments do tabeli nutriments_table
+                                    nutriments_table.Rows.Add(product.EnergyKcal * recipe.Weight / 100,
+                                        product.Fat * recipe.Weight / 100,
+                                        product.Carbohydrates * recipe.Weight / 100,
+                                        product.Fiber * recipe.Weight / 100,
+                                        product.Protein * recipe.Weight / 100,
+                                        product.Salt * recipe.Weight / 100);
+                                }
+                                else
+                                {
+                                    nutriments_table.Rows[0].Cells["Kcal"].Value = (float)Math.Round(Convert.ToSingle(nutriments_table.Rows[0].Cells["Kcal"].Value) + (product.EnergyKcal * recipe.Weight / 100), 2);
+                                    nutriments_table.Rows[0].Cells["Fat"].Value = (float)Math.Round(Convert.ToSingle(nutriments_table.Rows[0].Cells["Fat"].Value) + (product.Fat * recipe.Weight / 100), 2);
+                                    nutriments_table.Rows[0].Cells["Carbohydrates"].Value = (float)Math.Round(Convert.ToSingle(nutriments_table.Rows[0].Cells["Carbohydrates"].Value) + (product.Carbohydrates * recipe.Weight / 100), 2);
+                                    nutriments_table.Rows[0].Cells["Fiber"].Value = (float)Math.Round(Convert.ToSingle(nutriments_table.Rows[0].Cells["Fiber"].Value) + (product.Fiber * recipe.Weight / 100), 2);
+                                    nutriments_table.Rows[0].Cells["Protein"].Value = (float)Math.Round(Convert.ToSingle(nutriments_table.Rows[0].Cells["Protein"].Value) + (product.Protein * recipe.Weight / 100), 2);
+                                    nutriments_table.Rows[0].Cells["Salt"].Value = (float)Math.Round(Convert.ToSingle(nutriments_table.Rows[0].Cells["Salt"].Value) + (product.Salt * recipe.Weight / 100), 2);
+
+
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -154,7 +193,8 @@ namespace AplikacjaDotNetProjekt
         {
             if (addTraining == null || addTraining.IsDisposed)
             {
-                DateTime selectedDate = dateTimePicker1.Value;
+
+                DateTime selectedDate = dateChoose_dateClicker.Value;
                 addTraining = new AddTraining(this, selectedDate, user.Id);
                 addTraining.Show();
             }
@@ -187,6 +227,7 @@ namespace AplikacjaDotNetProjekt
 
                 addMeasurement.BringToFront();
                 addMeasurement.Focus();
+            }
         }
     }
 }
