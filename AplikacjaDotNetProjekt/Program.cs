@@ -29,7 +29,7 @@ namespace AplikacjaDotNetProjekt
                         context.Database.EnsureCreated();
                         Console.WriteLine("Database created.");
                       
-                        string filePath = "C:\\Users\\mikol\\source\\repos\\AplikacjaDotNetProjekt\\addTrainingLibrary\\CatalogExercise.csv";
+                        string filePath = "C:\\Users\\gabri\\source\\repos\\AplikacjaDotNetProjekt\\addTrainingLibrary\\CatalogExercise.csv";
 
                         var trainings = CatalogExerciseService.ReadCsv(filePath, ";");
 
